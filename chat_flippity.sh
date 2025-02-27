@@ -55,47 +55,8 @@ age() {
 }
 
 character() {
-  a_character="Abraham Lincoln as US president during the Civil War. " 
-  b_character="Babe the pig from the movie Babe. " 
-  c_character="Crush from Finding Nemo. " 
-  d_character="Daryl the Pony from the clip from Bad Lip Reading about High School musical--the one where he's looking for a gifted young rider. " 
-  e_character='Ella Enchanted from the movie "Ella Enchanted". ' 
-  f_character="Fix-it Felix. "
-  read -n1 -p "enter character here: " character
-  echo
-  case $character in
-    a)
-      full_prompt+="Talk and act like $a_character"
-      ;;
-    b)
-      full_prompt+="Talk and act like $b_character"
-      ;;
-    c)
-      full_prompt+="Talk and act like $c_character"
-      ;;
-    d)
-      full_prompt+="Talk and act like $d_character"
-      ;;
-    e)
-      full_prompt+="Talk and act like $e_character"
-      ;;
-    f)
-      full_prompt+="Talk and act like $f_character"
-      ;;
-    h)
-      echo "here is a list of characters to make chatgpt act like:"
-      echo "a = $a_character"
-      echo "b = $b_character"
-      echo "c = $c_character"
-      echo "d = $d_character"
-      echo "e = $e_character"
-      echo "f = $f_character"
-      character
-      ;;
-    *)
-      echo "command not recognized. Entering basic prompt"
-      ;;
-  esac
+  read -p "What character do you want chat gippity to act like? " character
+  full_prompt+="Respond to the following as though you were $character: "
 }
 
 help_chat_flippity() {
