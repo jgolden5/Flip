@@ -35,6 +35,10 @@ chat_flippity() {
         get_n_sources $number_of_sources
         prompt && break
         ;;
+      w)
+        specify_question_type
+        prompt && break
+        ;;
       =)
         echo "current prompt = \"$full_prompt\""
         ;;
@@ -103,6 +107,7 @@ help_chat_flippity() {
   echo "l = explicitly control (l)ength of chatgpt's output"
   echo "p = generate a final (p)rompt after making modifications"
   echo "s = get n (s)ources and a brief summary of prompt"
+  echo "w = ask the following prompt formatted based on a specific q[w]estion focus"
   echo "= = print entirety of full_prompt so far"
 }
 
@@ -183,6 +188,11 @@ get_n_sources() {
     source_or_sources="sources"
   fi
   full_prompt+="Give a brief 2-4 description of and $number_of_sources $source_or_sources I can go to in order to get more relevant information about the following: "
+}
+
+specify_question_type() {
+  read -p "Pick a question to focus on in your prompt (such as what, when, where, how, and why): " question_focus
+  full_prompt+="When answering the following prompt, really keep the question \"${question_focus}\" in mind: "
 }
 
 alias cf='chat_flippity'
