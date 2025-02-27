@@ -10,24 +10,34 @@ chat_flippity() {
     case $command in 
       a)
         age
+        prompt
         ;;
       c)
         character
+        prompt
         ;;
       h)
         help_chat_flippity
         ;;
       l)
         lie
+        prompt
         ;;
       p)
         prompt
         break
         ;;
-      *)
-        echo "command not recognized. Please try again, and hit 'h' for help on chat_flippity features"
+      s)
+        read -p "How many sources do you want provided for your prompt? " number_of_sources
+        get_n_sources $number_of_sources
         prompt
         break
+        ;;
+      =)
+        echo "current prompt = \"$full_prompt\""
+        ;;
+      *)
+        echo "command not recognized. Please try again, and hit 'h' for help on chat_flippity features"
         ;;
     esac
   done
@@ -89,6 +99,7 @@ help_chat_flippity() {
   echo "h = generate this (h)elp prompt for a list of chat_flippity features"
   echo "l = tell chatgpt a (l)ie about myself to spice things up a bit"
   echo "p = generate a final (p)rompt after making modifications"
+  echo "s = get n (s)ources and a brief summary of prompt"
 }
 
 lie() {
@@ -137,11 +148,28 @@ lie() {
 
 prompt() {
   read -p "enter prompt here: " prompt
-  full_prompt+="$prompt"
-  echo "$full_prompt" | pbcopy
-  number_of_words=$(echo "$full_prompt" | wc -w)
-  echo "$number_of_words words successfully copied into clipboard"
+  if [[ $prompt == "back" ]]; then
+    echo "returning to chat_flippity command prompt..."
+    chat_flippity
+  else
+    full_prompt+="$prompt"
+    echo "$full_prompt" | pbcopy
+    number_of_words=$(echo "$full_prompt" | wc -w)
+    echo "$number_of_words words successfully copied into clipboard"
+  fi
+}
+
+get_n_sources() {
+  number_of_sources="$1"
+  shift
+  if [[ $number_of_sources == "1" ]]; then
+    source_or_sources="source"
+  else
+    source_or_sources="sources"
+  fi
+  full_prompt+="Give a brief 2-4 description of and $number_of_sources $source_or_sources I can go to in order to get more relevant information about the following: "
 }
 
 alias cf='chat_flippity'
+alias ep="echo $full_prompt"
 alias scf='source chat_flippity.sh'
