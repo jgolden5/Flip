@@ -10,28 +10,26 @@ chat_flippity() {
     case $command in 
       a)
         age
-        prompt
+        prompt && break
         ;;
       c)
         character
-        prompt
+        prompt && break
         ;;
       h)
         help_chat_flippity
         ;;
       l)
         lie
-        prompt
+        prompt && break
         ;;
       p)
-        prompt
-        break
+        prompt && break
         ;;
       s)
         read -p "How many sources do you want provided for your prompt? " number_of_sources
         get_n_sources $number_of_sources
-        prompt
-        break
+        prompt && break
         ;;
       =)
         echo "current prompt = \"$full_prompt\""
@@ -100,6 +98,7 @@ help_chat_flippity() {
   echo "l = tell chatgpt a (l)ie about myself to spice things up a bit"
   echo "p = generate a final (p)rompt after making modifications"
   echo "s = get n (s)ources and a brief summary of prompt"
+  echo "= = print entirety of full_prompt so far"
 }
 
 lie() {
@@ -148,14 +147,20 @@ lie() {
 
 prompt() {
   read -p "enter prompt here: " prompt
-  if [[ $prompt == "back" ]]; then
-    echo "returning to chat_flippity command prompt..."
-    chat_flippity
-  else
+  if [[ $prompt ]]; then
     full_prompt+="$prompt"
-    echo "$full_prompt" | pbcopy
-    number_of_words=$(echo "$full_prompt" | wc -w)
-    echo "$number_of_words words successfully copied into clipboard"
+    echo "Current prompt so far = \"${full_prompt}\""
+    read -n1 -p "Ready to use prompt? " end_prompt
+      echo
+      if [[ $end_prompt == "y" ]]; then
+        echo "$number_of_words words successfully copied into clipboard"
+        echo "$full_prompt" | pbcopy
+        number_of_words=$(echo "$full_prompt" | wc -w)
+        return 0
+      else
+        full_prompt+=$'\n'
+        return 1
+      fi
   fi
 }
 
