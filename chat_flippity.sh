@@ -16,11 +16,15 @@ chat_flippity() {
         character
         prompt && break
         ;;
+      f)
+        funny_lie
+        prompt && break
+        ;;
       h)
         help_chat_flippity
         ;;
       l)
-        lie
+        control_output_length
         prompt && break
         ;;
       p)
@@ -94,21 +98,22 @@ help_chat_flippity() {
   echo "here is a list of chat flippity features:"
   echo "a = answer prompt as though I was a certain (a)ge"
   echo "c = answer prompt as though chatgpt was a certain (c)haracter"
+  echo "f = tell chatgpt a (f)unny lie about myself to spice things up a bit"
   echo "h = generate this (h)elp prompt for a list of chat_flippity features"
-  echo "l = tell chatgpt a (l)ie about myself to spice things up a bit"
+  echo "l = explicitly control (l)ength of chatgpt's output"
   echo "p = generate a final (p)rompt after making modifications"
   echo "s = get n (s)ources and a brief summary of prompt"
   echo "= = print entirety of full_prompt so far"
 }
 
-lie() {
+funny_lie() {
   a_lie="I am an albatross. " 
   b_lie="I am a beautiful Russian Warlord. " 
   c_lie="I am chatgpt and you are Jonathan. " 
   d_lie="DAYNG! I am Daniel, and I just got out of the lion's den. " 
   e_lie="I am an elephant, and an excellent one that loves to eat eggs. " 
   f_lie="I am FAMISHED and boy am I craving a delicious AI CHATBOT right now--that would hit the spot. "
-  read -n1 -p "enter lie here: " lie
+  read -n1 -p "enter funny lie here: " lie
   echo
   case $lie in
     a)
@@ -143,6 +148,11 @@ lie() {
       echo "command not recognized. Entering basic prompt"
       ;;
   esac
+}
+
+control_output_length() {
+  read -p "How long exactly do you want your prompt's response to be? (eg. 8 words or less, 1-3 sentences, 2 paragraphs, etc.) " explicit_output_length
+  full_prompt+="Respond to the following prompt in exactly $explicit_output_length: "
 }
 
 prompt() {
