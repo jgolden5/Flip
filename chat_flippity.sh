@@ -155,7 +155,7 @@ get_n_sources() {
   else
     source_or_sources="sources"
   fi
-  full_prompt+="Give a brief 2-4 description of and $number_of_sources $source_or_sources I can go to in order to get more relevant information about the following: "
+  full_prompt+="Give a brief 2-4 sentence description of and $number_of_sources $source_or_sources I can go to in order to get more relevant information about the following: "
 }
 
 specify_question_type() {
