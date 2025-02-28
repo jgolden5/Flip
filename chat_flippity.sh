@@ -30,6 +30,10 @@ chat_flippity() {
         control_output_length
         prompt && break
         ;;
+      m)
+        make_metaphor
+        prompt && break
+        ;;
       p)
         prompt && break
         ;;
@@ -73,6 +77,7 @@ help_chat_flippity() {
   echo "f = tell chatgpt a (f)unny lie about myself to spice things up a bit"
   echo "h = generate this (h)elp prompt for a list of chat_flippity commands"
   echo "l = explicitly control (l)ength of chatgpt's output"
+  echo "m = specify a (m)etaphor to be used in an example in chatGPT's response"
   echo "p = generate a final (p)rompt after making modifications"
   echo "r = (r)efresh chat by forgetting all other things I entered into this chat"
   echo "s = get n (s)ources and a brief summary of prompt"
@@ -132,6 +137,11 @@ funny_lie() {
 control_output_length() {
   read -p "How long exactly do you want your prompt's response to be? (eg. 8 words or less, 1-3 sentences, 2 paragraphs, etc.) " explicit_output_length
   full_prompt+="Respond to the following prompt in exactly $explicit_output_length: "
+}
+
+make_metaphor() {
+  read -p "What do you want a metaphor about in your answer? " metaphor
+  full_prompt+="Respond to the following prompt with a metaphor about $metaphor: "
 }
 
 prompt() {
