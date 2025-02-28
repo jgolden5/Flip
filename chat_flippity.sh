@@ -240,7 +240,7 @@ prompt() {
 }
 
 refresh_chat() {
-  full_prompt+="Refresh anything I said in this chat previous, and start afresh from now on. "
+  full_prompt+="Refresh anything I said in this chat previously, and start afresh from now on. "
   echo "Refresh message was added to prompt"
 }
 
