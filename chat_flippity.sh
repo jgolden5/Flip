@@ -30,6 +30,9 @@ chat_flippity() {
       p)
         prompt && break
         ;;
+      r)
+        refresh_chat
+        ;;
       s)
         read -p "How many sources do you want provided for your prompt? " number_of_sources
         get_n_sources $number_of_sources
@@ -67,6 +70,7 @@ help_chat_flippity() {
   echo "h = generate this (h)elp prompt for a list of chat_flippity features"
   echo "l = explicitly control (l)ength of chatgpt's output"
   echo "p = generate a final (p)rompt after making modifications"
+  echo "r = (r)efresh chat by forgetting all other things I entered into this chat"
   echo "s = get n (s)ources and a brief summary of prompt"
   echo "w = ask the following prompt formatted based on a specific q[w]estion focus"
   echo "= = print entirety of full_prompt so far"
@@ -123,21 +127,24 @@ control_output_length() {
 
 prompt() {
   read -p "enter prompt here: " prompt
-  if [[ $prompt ]]; then
-    full_prompt+="$prompt"
-    echo "Current prompt so far = \"${full_prompt}\""
-    read -n1 -p "Ready to use prompt? " end_prompt
-      echo
-      if [[ $end_prompt == "y" ]]; then
-        echo "$number_of_words words successfully copied into clipboard"
-        echo "$full_prompt" | pbcopy
-        number_of_words=$(echo "$full_prompt" | wc -w)
-        return 0
-      else
-        full_prompt+=$'\n'
-        return 1
-      fi
-  fi
+  full_prompt+=$prompt
+  echo "Current prompt so far = \"${full_prompt}\""
+  read -n1 -p "Ready to use prompt? " end_prompt
+    echo
+    if [[ $end_prompt == "y" ]]; then
+      echo "$number_of_words words successfully copied into clipboard"
+      echo "$full_prompt" | pbcopy
+      number_of_words=$(echo "$full_prompt" | wc -w)
+      return 0
+    else
+      full_prompt+=$'\n'
+      return 1
+    fi
+}
+
+refresh_chat() {
+  full_prompt+="Refresh anything I said in this chat, and just start afresh. "
+  echo "Refresh message was added to prompt"
 }
 
 get_n_sources() {
