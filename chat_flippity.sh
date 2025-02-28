@@ -3,6 +3,7 @@
 full_prompt=""
 
 chat_flippity() {
+  welcome_to_chat_flippity
   full_prompt=""
   while true; do
     read -n1 -p "enter flippity command here: " command
@@ -57,6 +58,83 @@ chat_flippity() {
         ;;
     esac
   done
+}
+
+welcome_to_chat_flippity() {
+  rand=$(echo $((RANDOM % 22 + 1)))
+  random_char=
+  case $rand in
+    1)
+      random_char="b"
+      ;;
+    2)
+      random_char="ch"
+      ;;
+    3)
+      random_char="d"
+      ;;
+    4)
+      random_char="fl"
+      ;;
+    5)
+      random_char="g"
+      ;;
+    6)
+      random_char="h"
+      ;;
+    7)
+      random_char="j"
+      ;;
+    8)
+      random_char="sk"
+      ;;
+    9)
+      random_char="l"
+      ;;
+    10)
+      random_char="m"
+      ;;
+    11)
+      random_char="n"
+      ;;
+    12)
+      random_char="p"
+      ;;
+    13)
+      random_char="qu"
+      ;;
+    14)
+      random_char="r"
+      ;;
+    15)
+      random_char="s"
+      ;;
+    16)
+      random_char="t"
+      ;;
+    17)
+      random_char="v"
+      ;;
+    18)
+      random_char="w"
+      ;;
+    19)
+      random_char="x"
+      ;;
+    20)
+      random_char="y"
+      ;;
+    21)
+      random_char="z"
+      ;;
+    22)
+      random_char="sl"
+      ;;
+    *)
+      random_char="fl"
+      ;;
+  esac
+  echo "Are you ready to get ${random_char}ippity?"
 }
 
 age() {
