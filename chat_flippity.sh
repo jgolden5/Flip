@@ -16,6 +16,9 @@ chat_flippity() {
         character
         prompt && break
         ;;
+      d)
+        delete_current_prompt
+        ;;
       f)
         funny_lie
         prompt && break
@@ -46,7 +49,7 @@ chat_flippity() {
         echo "current prompt = \"$full_prompt\""
         ;;
       *)
-        echo "command not recognized. Please try again, and hit 'h' for help on chat_flippity features"
+        echo "command not recognized. Please try again, and hit 'h' for help on chat_flippity commands"
         ;;
     esac
   done
@@ -63,17 +66,23 @@ character() {
 }
 
 help_chat_flippity() {
-  echo "here is a list of chat flippity features:"
+  echo "here is a list of chat flippity commands:"
   echo "a = answer prompt as though I was a certain (a)ge"
   echo "c = answer prompt as though chatgpt was a certain (c)haracter"
+  echo "d = (d)elete current prompt"
   echo "f = tell chatgpt a (f)unny lie about myself to spice things up a bit"
-  echo "h = generate this (h)elp prompt for a list of chat_flippity features"
+  echo "h = generate this (h)elp prompt for a list of chat_flippity commands"
   echo "l = explicitly control (l)ength of chatgpt's output"
   echo "p = generate a final (p)rompt after making modifications"
   echo "r = (r)efresh chat by forgetting all other things I entered into this chat"
   echo "s = get n (s)ources and a brief summary of prompt"
   echo "w = ask the following prompt formatted based on a specific q[w]estion focus"
   echo "= = print entirety of full_prompt so far"
+}
+
+delete_current_prompt() {
+  full_prompt=""
+  echo "Prompt deleted"
 }
 
 funny_lie() {
