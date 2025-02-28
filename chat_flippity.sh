@@ -43,7 +43,7 @@ chat_flippity() {
         ;;
       s)
         read -p "How many sources do you want provided for your prompt? " number_of_sources
-        get_n_sources $number_of_sources
+        get_sources $number_of_sources
         prompt && break
         ;;
       w)
@@ -244,7 +244,7 @@ refresh_chat() {
   echo "Refresh message was added to prompt"
 }
 
-get_n_sources() {
+get_sources() {
   number_of_sources="$1"
   shift
   if [[ $number_of_sources == "1" ]]; then
