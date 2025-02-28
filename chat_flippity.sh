@@ -132,9 +132,9 @@ prompt() {
   read -n1 -p "Ready to use prompt? " end_prompt
     echo
     if [[ $end_prompt == "y" ]]; then
+      number_of_words=$(echo $full_prompt | wc -w)
       echo "$number_of_words words successfully copied into clipboard"
-      echo "$full_prompt" | pbcopy
-      number_of_words=$(echo "$full_prompt" | wc -w)
+      echo $full_prompt | pbcopy
       return 0
     else
       full_prompt+=$'\n'
