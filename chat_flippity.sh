@@ -38,6 +38,9 @@ chat_flippity() {
       p)
         flippity_prompt && break
         ;;
+      q)
+        echo "quitting chat flippity..." && break
+        ;;
       r)
         refresh_chat
         ;;
@@ -158,6 +161,7 @@ help_chat_flippity() {
   echo "m = specify a (m)etaphor to be used in an example in chatGPT's response"
   echo "p = generate a final (p)rompt after making modifications"
   echo "r = (r)efresh chat by forgetting all other things I entered into this chat"
+  echo "q = (q)uit chat_flippity"
   echo "s = get n (s)ources and a brief summary of prompt"
   echo "w = ask the following prompt formatted based on a specific q[w]estion focus"
   echo "= = print entirety of full_prompt so far"
