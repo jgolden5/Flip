@@ -11,32 +11,32 @@ chat_flippity() {
     case $command in 
       a)
         age
-        prompt && break
+        flippity_prompt && break
         ;;
       c)
         character
-        prompt && break
+        flippity_prompt && break
         ;;
       d)
         delete_current_prompt
         ;;
       f)
         funny_lie
-        prompt && break
+        flippity_prompt && break
         ;;
       h)
         help_chat_flippity
         ;;
       l)
         control_output_length
-        prompt && break
+        flippity_prompt && break
         ;;
       m)
         make_metaphor
-        prompt && break
+        flippity_prompt && break
         ;;
       p)
-        prompt && break
+        flippity_prompt && break
         ;;
       r)
         refresh_chat
@@ -44,11 +44,11 @@ chat_flippity() {
       s)
         read -p "How many sources do you want provided for your prompt? " number_of_sources
         get_sources $number_of_sources
-        prompt && break
+        flippity_prompt && break
         ;;
       w)
         specify_question_type
-        prompt && break
+        flippity_prompt && break
         ;;
       =)
         echo "current prompt = \"$full_prompt\""
@@ -222,7 +222,7 @@ make_metaphor() {
   full_prompt+="Respond to the following prompt with a metaphor about $metaphor: "
 }
 
-prompt() {
+flippity_prompt() {
   read -p "enter prompt here: " prompt
   full_prompt+=$prompt
   echo "Current prompt so far = \"${full_prompt}\""
