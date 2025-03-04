@@ -13,6 +13,10 @@ chat_flippity() {
         age
         flippity_prompt && break
         ;;
+      b)
+        fill_blanks
+        flippity_prompt && break
+        ;;
       c)
         character
         flippity_prompt && break
@@ -145,6 +149,11 @@ age() {
   full_prompt+="Answer the following question as though I was $age years old: "
 }
 
+fill_blanks() {
+  full_prompt+="Fill in the blanks, and clearly define each of the terms you fill in the blanks with, for the following: "
+  echo "Copying \"Fill in the blanks, and clearly define each of the terms you fill in the blanks with: \" to full_prompt (Note, make sure your prompt includes blanks if you want this to make any sense.)"
+}
+
 character() {
   read -p "What character do you want chat gippity to act like? " character
   full_prompt+="Respond to the following as though you were $character: "
@@ -153,6 +162,7 @@ character() {
 help_chat_flippity() {
   echo "here is a list of chat flippity commands:"
   echo "a = answer prompt as though I was a certain (a)ge"
+  echo "b = answer prompt by filling in words and details for the (b)lank spaces"
   echo "c = answer prompt as though chatgpt was a certain (c)haracter"
   echo "d = (d)elete current prompt"
   echo "f = tell chatgpt a (f)unny lie about myself to spice things up a bit"
