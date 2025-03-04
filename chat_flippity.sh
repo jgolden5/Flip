@@ -39,6 +39,10 @@ chat_flippity() {
         make_metaphor
         flippity_prompt && break
         ;;
+      o)
+        code_response
+        flippity_prompt && break
+        ;;
       p)
         flippity_prompt && break
         ;;
@@ -234,6 +238,11 @@ control_output_length() {
 make_metaphor() {
   read -p "What do you want a metaphor about in your answer? " metaphor
   full_prompt+="Respond to the following prompt with a metaphor about $metaphor: "
+}
+
+code_response() {
+  read -p "What coding language do you want chatGPT to respond with in your answer? " language
+  full_prompt+="Respond to the following with $language code: "
 }
 
 flippity_prompt() {
