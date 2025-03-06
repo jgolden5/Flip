@@ -39,6 +39,10 @@ chat_flippity() {
         make_metaphor
         flippity_prompt && break
         ;;
+      n)
+        best_n_answers
+        flippity_prompt && break
+        ;;
       o)
         code_response
         flippity_prompt && break
@@ -173,6 +177,8 @@ help_chat_flippity() {
   echo "h = generate this (h)elp prompt for a list of chat_flippity commands"
   echo "l = explicitly control (l)ength of chatgpt's output"
   echo "m = specify a (m)etaphor to be used in an example in chatGPT's response"
+  echo "n = respond to the prompt with (n) unique yet insightful responses"
+  echo "o = respond to the following with c(o)de in the specified language"
   echo "p = generate a final (p)rompt after making modifications"
   echo "r = (r)efresh chat by forgetting all other things I entered into this chat"
   echo "q = (q)uit chat_flippity"
@@ -238,6 +244,11 @@ control_output_length() {
 make_metaphor() {
   read -p "What do you want a metaphor about in your answer? " metaphor
   full_prompt+="Respond to the following prompt with a metaphor about $metaphor: "
+}
+
+best_n_answers() {
+  read -p "How many answers do you want chat gippity to respond to your question with? " n
+  full_prompt+="Respond to the following prompt with $n different, high-quality, uniquely-insightful answers: "
 }
 
 code_response() {
