@@ -61,6 +61,9 @@ chat_flippity() {
         get_sources $number_of_sources
         flippity_prompt && break
         ;;
+      v)
+        verify_question_and_answer
+        ;;
       w)
         specify_question_type
         flippity_prompt && break
@@ -183,7 +186,8 @@ help_chat_flippity() {
   echo "r = (r)efresh chat by forgetting all other things I entered into this chat"
   echo "q = (q)uit chat_flippity"
   echo "s = get n (s)ources and a brief summary of prompt"
-  echo "w = ask the following prompt formatted based on a specific q[w]estion focus"
+  echo "v = (v)erfiy whether the following question and answer is accurate"
+  echo "w = ask the following prompt formatted based on a specific q(w)estion focus"
   echo "= = print entirety of full_prompt so far"
 }
 
@@ -287,6 +291,11 @@ get_sources() {
     source_or_sources="sources"
   fi
   full_prompt+="Give a brief 2-4 sentence description of and $number_of_sources web $source_or_sources I can go to in order to get more relevant information about the following: "
+}
+
+verify_question_and_answer() {
+  read -p "Please enter the question AND answer you want chat gippity to verify (in the form: Question? answer) " question_and_answer
+  full_prompt+="Please verify that the following question and answer represent an answer that accurately answers the question, and add any clarification if needed: $question_and_answer. "
 }
 
 specify_question_type() {
