@@ -28,6 +28,10 @@ chat_flippity() {
         funny_lie
         flippity_prompt && break
         ;;
+      g)
+        get_prompt_from_gippity
+        flippity_prompt && break
+        ;;
       h)
         help_chat_flippity
         ;;
@@ -170,6 +174,10 @@ character() {
   full_prompt+="Respond to the following as though you were $character: "
 }
 
+get_prompt_from_gippity() {
+  full_prompt+="Format the following question I have into a format that will be easy, summarized, and simple in order for chatgpt to understand it as best as it can: "
+}
+
 help_chat_flippity() {
   echo "here is a list of chat flippity commands:"
   echo "a = answer prompt as though I was a certain (a)ge"
@@ -177,6 +185,7 @@ help_chat_flippity() {
   echo "c = answer prompt as though chatgpt was a certain (c)haracter"
   echo "d = (d)elete current prompt"
   echo "f = tell chatgpt a (f)unny lie about myself to spice things up a bit"
+  echo "g = have chatgpt format my prompt in a way that would be optimized for chat(g)pt to answer"
   echo "h = generate this (h)elp prompt for a list of chat_flippity commands"
   echo "l = explicitly control (l)ength of chatgpt's output"
   echo "m = specify a (m)etaphor to be used in an example in chatGPT's response"
