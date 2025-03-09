@@ -35,6 +35,10 @@ chat_flippity() {
       h)
         help_chat_flippity
         ;;
+      i)
+        filibuster
+        flippity_prompt && break
+        ;;
       l)
         control_output_length
         flippity_prompt && break
@@ -183,6 +187,26 @@ get_prompt_from_gippity() {
   full_prompt+="Format the following question I have into a format that will be easy, summarized, and simple in order for chatgpt to understand it as best as it can: "
 }
 
+filibuster() {
+  read -p "How long do you want chat gippity to filibuster for? " n units
+  length_of_response=
+  case $units in 
+    seconds|second)
+      length_of_response="$((n * 5)) words"
+      ;;
+    minutes|minute)
+      length_of_response="$((n * 20)) long paragraphs"
+      ;;
+    hours|hour) #note that chat gippity is super not capable of filibustering for an hour, and hardly pulls off a small number of minutes
+      length_of_response="$((n * 120)) noticeably long paragraphs"
+      ;;
+    *)
+      echo "Unit $units not recognized"
+      ;;
+  esac
+  full_prompt+="Respond to the following prompt in exactly $length_of_response, but don't mention the length at all in your response. Instead, treat it as though you were simply filibustering to take up time, and filibuster on the following subject: "
+}
+
 help_chat_flippity() {
   echo "here is a list of chat flippity commands:"
   echo "a = answer prompt as though I was a certain (a)ge"
@@ -192,6 +216,7 @@ help_chat_flippity() {
   echo "f = tell chatgpt a (f)unny lie about myself to spice things up a bit"
   echo "g = have chatgpt format my prompt in a way that would be optimized for chat(g)pt to answer"
   echo "h = generate this (h)elp prompt for a list of chat_flippity commands"
+  echo "i = f(i)libuster chat gippity's response for n units of time"
   echo "l = explicitly control (l)ength of chatgpt's output"
   echo "m = specify a (m)etaphor to be used in an example in chatGPT's response"
   echo "n = respond to the prompt with (n) unique yet insightful responses"
