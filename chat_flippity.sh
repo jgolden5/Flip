@@ -276,7 +276,7 @@ code_response() {
 }
 
 flippity_prompt() {
-  if [[ $1 -ne "-q" ]]; then
+  if [[ $1 != "-q" ]]; then
     read -p "enter prompt here: " prompt
     full_prompt+=$prompt
   fi
