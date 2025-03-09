@@ -66,7 +66,12 @@ chat_flippity() {
         flippity_prompt && break
         ;;
       v)
-        verify_question_and_answer
+        verify_question_and_answer #get explanation AND 1-5 accuracy scale
+        flippity_prompt -q && break
+        ;;
+      V)
+        verify_question_and_answer -q #ONLY get accuracy of q/a on a scale of 1-5
+        flippity_prompt -q && break
         ;;
       w)
         specify_question_type
@@ -195,7 +200,8 @@ help_chat_flippity() {
   echo "r = (r)efresh chat by forgetting all other things I entered into this chat"
   echo "q = (q)uit chat_flippity"
   echo "s = get n (s)ources and a brief summary of prompt"
-  echo "v = (v)erfiy whether the following question and answer is accurate"
+  echo "v = (v)erfiy whether the following question and answer is accurate with accuracy scale and explanation"
+  echo "V = (V)erfiy whether the following question and answer is accurate in quiet mode--just with a 1-5 accuracy scale"
   echo "w = ask the following prompt formatted based on a specific q(w)estion focus"
   echo "= = print entirety of full_prompt so far"
 }
@@ -270,8 +276,10 @@ code_response() {
 }
 
 flippity_prompt() {
-  read -p "enter prompt here: " prompt
-  full_prompt+=$prompt
+  if [[ $1 -ne "-q" ]]; then
+    read -p "enter prompt here: " prompt
+    full_prompt+=$prompt
+  fi
   echo "Current prompt so far = \"${full_prompt}\""
   read -n1 -p "Ready to use prompt? " end_prompt
     echo
@@ -303,8 +311,14 @@ get_sources() {
 }
 
 verify_question_and_answer() {
-  read -p "Please enter the question AND answer you want chat gippity to verify (in the form: Question? answer) " question_and_answer
-  full_prompt+="Please verify that the following question and answer represent an answer that accurately answers the question, and add any clarification if needed: $question_and_answer. "
+  full_prompt+="Please rate how accurate the following answer(s) are to the following question(s) on a scale of 1-5, 1 being completely inaccurate, and 5 being completely accurate"
+  if [[ $1 == "-q" ]]; then
+    read -p "(quiet mode) Please enter the question(s) AND answer(s) you want chat gippity to verify (in the form: Question? answer) " question_and_answer
+    full_prompt+=", and provide no explanation as to why: $question_and_answer"
+  else
+    read -p "Please enter the question(s) AND answer(s) you want chat gippity to verify (in the form: Question? answer. Question n? answer n.) " question_and_answer
+    full_prompt+=". Then, verify if the following question and answer represent an answer that accurately answers the question, and add any clarification if needed.  $question_and_answer."
+  fi
 }
 
 specify_question_type() {
