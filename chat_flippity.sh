@@ -69,6 +69,10 @@ chat_flippity() {
         get_sources $number_of_sources
         flippity_prompt && break
         ;;
+      u)
+        generate_quote
+        flippity_prompt && break
+        ;;
       v)
         verify_question_and_answer #get explanation AND 1-5 accuracy scale
         flippity_prompt -q && break
@@ -225,6 +229,7 @@ help_chat_flippity() {
   echo "r = (r)efresh chat by forgetting all other things I entered into this chat"
   echo "q = (q)uit chat_flippity"
   echo "s = get n (s)ources and a brief summary of prompt"
+  echo "u = generate a famous q(u)ote about the following prompt"
   echo "v = (v)erfiy whether the following question and answer is accurate with accuracy scale and explanation"
   echo "V = (V)erfiy whether the following question and answer is accurate in quiet mode--just with a 1-5 accuracy scale"
   echo "w = ask the following prompt formatted based on a specific q(w)estion focus"
@@ -333,6 +338,10 @@ get_sources() {
     source_or_sources="sources"
   fi
   full_prompt+="Give a brief 2-4 sentence description of and $number_of_sources web $source_or_sources I can go to in order to get more relevant information about the following: "
+}
+
+generate_quote() {
+  full_prompt+="Generate a famous quote about the following: "
 }
 
 verify_question_and_answer() {
