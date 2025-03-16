@@ -230,8 +230,8 @@ help_chat_flippity() {
   echo "q = (q)uit chat_flippity"
   echo "s = get n (s)ources and a brief summary of prompt"
   echo "u = generate a famous q(u)ote about the following prompt"
-  echo "v = (v)erfiy whether the following question and answer is accurate with accuracy scale and explanation"
-  echo "V = (V)erfiy whether the following question and answer is accurate in quiet mode--just with a 1-5 accuracy scale"
+  echo "v = (v)erify whether the following question and answer is accurate with accuracy scale and explanation"
+  echo "V = (V)erify whether the following question and answer is accurate in quiet mode--just with a 1-5 accuracy scale"
   echo "w = ask the following prompt formatted based on a specific q(w)estion focus"
   echo "= = print entirety of full_prompt so far"
 }
@@ -248,6 +248,9 @@ funny_lie() {
   d_lie="DAYNG! I am Daniel, and I just got out of the lion's den. " 
   e_lie="I am an elephant, and an excellent one that loves to eat eggs. " 
   f_lie="I am FAMISHED and boy am I craving a delicious AI CHATBOT right now--that would hit the spot. "
+  g_lie="Gee whiz! You must be a whiz to think you could help me, golly gee! " 
+  h_lie="Hey, how are you chat gippity? I am so hhhhhhhhhhhappy to see you! Do I hhhhave bad breath? I hhhhhhope not. " 
+  i_lie="Ay ay ay = i i i. "
   read -n1 -p "enter funny lie here: " lie
   echo
   case $lie in
@@ -269,6 +272,9 @@ funny_lie() {
     f)
       full_prompt+="$f_lie"
       ;;
+    g)
+      full_prompt+="$g_lie"
+      ;;
     h)
       echo "here is a list of tall tales you can lie about:"
       echo "a = $a_lie"
@@ -277,7 +283,16 @@ funny_lie() {
       echo "d = $d_lie"
       echo "e = $e_lie"
       echo "f = $f_lie"
-      lie
+      echo "g = $g_lie"
+      echo "h = $h_lie"
+      echo "i = $i_lie"
+      funny_lie
+      ;;
+    H)
+      full_prompt+="$h_lie"
+      ;;
+    i)
+      full_prompt+="$i_lie"
       ;;
     *)
       echo "command not recognized. Entering basic prompt"
