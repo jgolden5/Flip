@@ -85,6 +85,10 @@ chat_flippity() {
         specify_question_type
         flippity_prompt && break
         ;;
+      x)
+        give_examples
+        flippity_prompt && break
+        ;;
       =)
         echo "current prompt = \"$full_prompt\""
         ;;
@@ -233,6 +237,7 @@ help_chat_flippity() {
   echo "v = (v)erify whether the following question and answer is accurate with accuracy scale and explanation"
   echo "V = (V)erify whether the following question and answer is accurate in quiet mode--just with a 1-5 accuracy scale"
   echo "w = ask the following prompt formatted based on a specific q(w)estion focus"
+  echo "x = get n e(x)amples based on prompt"
   echo "= = print entirety of full_prompt so far"
   echo "? = like 'h', generate this help prompt for a list of chat_flippity commands"
 }
@@ -374,6 +379,11 @@ verify_question_and_answer() {
 specify_question_type() {
   read -p "Pick a question to focus on in your prompt (such as what, when, where, how, and why): " question_focus
   full_prompt+="When answering the following prompt, really keep the question \"${question_focus}\" in mind: "
+}
+
+give_examples() {
+  read -p "How many examples do you want on the topic you're about to ask about? " x
+  full_prompt+="Please give $x examples to help clarify the following (note that if I give more than 1 example, that each example should provide unique yet relevant value): "
 }
 
 alias cf='chat_flippity'
