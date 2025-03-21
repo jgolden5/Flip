@@ -32,7 +32,7 @@ chat_flippity() {
         get_prompt_from_gippity
         flippity_prompt && break
         ;;
-      h)
+      h|\?)
         help_chat_flippity
         ;;
       i)
@@ -234,6 +234,7 @@ help_chat_flippity() {
   echo "V = (V)erify whether the following question and answer is accurate in quiet mode--just with a 1-5 accuracy scale"
   echo "w = ask the following prompt formatted based on a specific q(w)estion focus"
   echo "= = print entirety of full_prompt so far"
+  echo "? = like 'h', generate this help prompt for a list of chat_flippity commands"
 }
 
 delete_current_prompt() {
