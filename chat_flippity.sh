@@ -340,7 +340,7 @@ flippity_prompt() {
       echo $full_prompt | pbcopy
       return 0
     else
-      full_prompt+=$'\n'
+      full_prompt+=' '
       return 1
     fi
 }
