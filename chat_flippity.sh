@@ -81,6 +81,10 @@ chat_flippity() {
         verify_question_and_answer -q #ONLY get accuracy of q/a on a scale of 1-5
         flippity_prompt -q && break
         ;;
+      w)
+        define_word_in_prompt
+        flippity_prompt && break
+        ;;
       x)
         give_examples
         flippity_prompt && break
@@ -89,7 +93,7 @@ chat_flippity() {
         echo "current prompt = \"$full_prompt\""
         ;;
       \")
-        generate_quote
+        find_quote
         flippity_prompt && break
         ;;
       *)
@@ -236,6 +240,7 @@ help_chat_flippity() {
   echo "u = ask the following prompt formatted based on a specific q(u)estion focus"
   echo "v = (v)erify whether the following question and answer is accurate with accuracy scale and explanation"
   echo "V = (V)erify whether the following question and answer is accurate in quiet mode--just with a 1-5 accuracy scale"
+  echo "w = define a (w)ord as used in the following prompt"
   echo "x = get n e(x)amples based on prompt"
   echo "= = print entirety of full_prompt so far"
   echo '" = generate a famous quote (") about the following prompt'
@@ -327,7 +332,7 @@ code_response() {
 }
 
 flippity_prompt() {
-  if [[ $1 != "-q" ]]; then
+  if [[ $1 != "-q" ]]; then #-q is used when no additional prompt from user is desired
     read -p "enter prompt here: " prompt
     full_prompt+=$prompt
   fi
@@ -361,12 +366,12 @@ get_sources() {
   full_prompt+="Give a brief 2-4 sentence description of and $number_of_sources web $source_or_sources I can go to in order to get more relevant information about the following: "
 }
 
-generate_quote() {
+find_quote() {
   read -p "Which person do you want the famous quote to come from? (Leave blank if you don't care) " famous_person
   if [[ "$famous_person" ]]; then
-    full_prompt+="Generate a famous quote from $famous_person about the following: "
+    full_prompt+="Find a famous quote from $famous_person about the following: "
   else
-    full_prompt+="Generate a famous quote about the following: "
+    full_prompt+="Find a famous quote about the following: "
   fi
 }
 
@@ -384,6 +389,11 @@ verify_question_and_answer() {
 specify_question_type() {
   read -p "Pick a question to focus on in your prompt (such as what, when, where, how, and why): " question_focus
   full_prompt+="When answering the following prompt, really keep the question \"${question_focus}\" in mind: "
+}
+
+define_word_in_prompt() {
+  read -p "Which word do you want to get the definition of as used in a prompt? " word
+  full_prompt+="Please define the word $word as used in the following prompt: "
 }
 
 give_examples() {
