@@ -75,11 +75,11 @@ chat_flippity() {
         ;;
       v)
         verify_question_and_answer #get explanation AND 1-5 accuracy scale
-        flippity_prompt -q && break
+        flippity_prompt "-q" && break
         ;;
       V)
         verify_question_and_answer -q #ONLY get accuracy of q/a on a scale of 1-5
-        flippity_prompt -q && break
+        flippity_prompt "-q" && break
         ;;
       w)
         define_word_in_prompt
@@ -332,7 +332,7 @@ code_response() {
 }
 
 flippity_prompt() {
-  if [[ $1 != "-q" ]]; then #-q is used when no additional prompt from user is desired
+  if [[ "$1" != "-q" ]]; then #-q is used when no additional prompt from user is desired
     read -p "enter prompt here: " prompt
     full_prompt+=$prompt
   fi
@@ -342,7 +342,7 @@ flippity_prompt() {
     if [[ $end_prompt == "y" ]]; then
       number_of_words=$(echo $full_prompt | wc -w)
       echo "$number_of_words words successfully copied into clipboard"
-      echo $full_prompt | pbcopy
+      echo "$full_prompt" | pbcopy
       return 0
     else
       full_prompt+=' '
