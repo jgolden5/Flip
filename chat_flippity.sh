@@ -70,7 +70,7 @@ chat_flippity() {
         flippity_prompt && break
         ;;
       u)
-        generate_quote
+        specify_question_type
         flippity_prompt && break
         ;;
       v)
@@ -81,16 +81,16 @@ chat_flippity() {
         verify_question_and_answer -q #ONLY get accuracy of q/a on a scale of 1-5
         flippity_prompt -q && break
         ;;
-      w)
-        specify_question_type
-        flippity_prompt && break
-        ;;
       x)
         give_examples
         flippity_prompt && break
         ;;
       =)
         echo "current prompt = \"$full_prompt\""
+        ;;
+      \")
+        generate_quote
+        flippity_prompt && break
         ;;
       *)
         echo "command not recognized. Please try again, and hit 'h' for help on chat_flippity commands"
@@ -233,12 +233,12 @@ help_chat_flippity() {
   echo "r = (r)efresh chat by forgetting all other things I entered into this chat"
   echo "q = (q)uit chat_flippity"
   echo "s = get n (s)ources and a brief summary of prompt"
-  echo "u = generate a famous q(u)ote about the following prompt"
+  echo "u = ask the following prompt formatted based on a specific q(u)estion focus"
   echo "v = (v)erify whether the following question and answer is accurate with accuracy scale and explanation"
   echo "V = (V)erify whether the following question and answer is accurate in quiet mode--just with a 1-5 accuracy scale"
-  echo "w = ask the following prompt formatted based on a specific q(w)estion focus"
   echo "x = get n e(x)amples based on prompt"
   echo "= = print entirety of full_prompt so far"
+  echo '" = generate a famous quote (") about the following prompt'
   echo "? = like 'h', generate this help prompt for a list of chat_flippity commands"
 }
 
@@ -362,7 +362,12 @@ get_sources() {
 }
 
 generate_quote() {
-  full_prompt+="Generate a famous quote about the following: "
+  read -p "Which person do you want the famous quote to come from? (Leave blank if you don't care) " famous_person
+  if [[ "$famous_person" ]]; then
+    full_prompt+="Generate a famous quote from $famous_person about the following: "
+  else
+    full_prompt+="Generate a famous quote about the following: "
+  fi
 }
 
 verify_question_and_answer() {
