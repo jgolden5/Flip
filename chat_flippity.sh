@@ -398,7 +398,7 @@ define_word_in_prompt() {
 
 give_examples() {
   read -p "How many examples do you want on the topic you're about to ask about? " x
-  full_prompt+="Please give $x examples to help clarify the following (note that if I give more than 1 example, that each example should provide unique yet relevant value): "
+  full_prompt+="Please give $x examples to help clarify the following (note that each example should provide unique yet relevant value): "
 }
 
 alias cf='chat_flippity'
