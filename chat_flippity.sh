@@ -216,7 +216,7 @@ filibuster() {
       echo "Unit $units not recognized"
       ;;
   esac
-  full_prompt+="Respond to the following prompt in exactly $length_of_response, but don't mention the length at all in your response. Instead, treat it as though you were simply filibustering to take up time, and filibuster on the following subject: "
+  full_prompt+="Respond to the following prompt in exactly $length_of_response, but don't mention the length at all in your response. Instead, generate the full amount of text all at once, treating it as though you were simply filibustering to take up time, and filibuster on the following subject: "
 }
 
 help_chat_flippity() {
