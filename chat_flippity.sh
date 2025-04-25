@@ -24,6 +24,9 @@ chat_flippity() {
       d)
         delete_current_prompt
         ;;
+      e)
+        elephant && break
+        ;;
       f)
         funny_lie
         flippity_prompt && break
@@ -225,6 +228,7 @@ help_chat_flippity() {
   echo "b = answer prompt by filling in words and details for the (b)lank spaces"
   echo "c = answer prompt as though chatgpt was a certain (c)haracter"
   echo "d = (d)elete current prompt"
+  echo "e = (e)lephant challenge--based on elephant principle, gives user practice breaking large problems into smaller ones"
   echo "f = tell chatgpt a (f)unny lie about myself to spice things up a bit"
   echo "g = have chatgpt format my prompt in a way that would be optimized for chat(g)pt to answer"
   echo "h = generate this (h)elp prompt for a list of chat_flippity commands"
@@ -252,12 +256,22 @@ delete_current_prompt() {
   echo "Prompt deleted"
 }
 
+elephant() { #based on the elephant principle of eating an elephant one bite at a time by simplifying complex problems
+  read -p "Please specify a topic on which to generate a complex problem test (leave blank for a random one): " problem_topic
+  if [[ "$problem_topic" ]]; then
+    full_prompt+="Please give me a complex problem for me to practice breaking complex problems down into simple problems. Make the super complex problem related to $problem_topic. I will attempt to break it down, and you can grade my response based on how well I did breaking the complex problems down into practical, well-thought, smaller problems. Be strict on this grade, but if I do SUPER good--like as good as humanly possible, give me an A+. Please point out any problems and rank their severity on a scale of 1-5, 1 being a mild concern, and 5 being a severe mistake. "
+  else
+    full_prompt+="Please give me a complex problem for me to practice breaking complex problems down into simple problems. I will attempt to break it down, and you can grade my response based on how well I did breaking the complex problems down into practical, well-thought, smaller problems. Be strict on this grade, but if I do SUPER good--like as good as humanly possible, give me an A+. Please point out any problems and rank their severity on a scale of 1-5, 1 being a mild concern, and 5 being a severe mistake. "
+  fi
+  echo "$full_prompt" | pbcopy && echo "elephant challenge was copied to clipboard"
+}
+
 funny_lie() {
   a_lie="I am an albatross. " 
   b_lie="I am a beautiful Russian Warlord. " 
   c_lie="I am chatgpt and you are Jonathan. " 
   d_lie="DAYNG! I am Daniel, and I just got out of the lion's den. " 
-  e_lie="I am an elephant, and an excellent one that loves to eat eggs. " 
+  e_lie="I have an exoskelaton--an excellent one that loves to eat eggs. " 
   f_lie="I am FAMISHED and boy am I craving a delicious AI CHATBOT right now--that would hit the spot. "
   g_lie="Gee whiz! You must be a whiz to think you could help me, golly gee! " 
   h_lie="Hey, how are you chat gippity? I am so hhhhhhhhhhhappy to see you! Do I hhhhave bad breath? I hhhhhhope not. " 
