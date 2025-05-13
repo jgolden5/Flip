@@ -92,6 +92,10 @@ chat_flippity() {
         give_examples
         flippity_prompt && break
         ;;
+      z)
+        possible_outcomes
+        flippity_prompt && break
+        ;;
       =)
         echo "current prompt = \"$full_prompt\""
         ;;
@@ -246,6 +250,7 @@ help_chat_flippity() {
   echo "V = (V)erify whether the following question and answer is accurate in quiet mode--just with a 1-5 accuracy scale"
   echo "w = define a (w)ord as used in the following prompt"
   echo "x = get n e(x)amples based on prompt"
+  echo "z = get n possible outcome(z) for this prompt"
   echo "= = print entirety of full_prompt so far"
   echo '" = generate a famous quote (") about the following prompt'
   echo "? = like 'h', generate this help prompt for a list of chat_flippity commands"
@@ -413,6 +418,11 @@ define_word_in_prompt() {
 give_examples() {
   read -p "How many examples do you want on the topic you're about to ask about? " x
   full_prompt+="Please give $x examples to help clarify the following (note that each example should provide unique yet relevant value): "
+}
+
+possible_outcomes() {
+  read -p "How many possible outcomes do you want to generate for the response: " outcomes
+  full_prompt+="Generate $outcomes possible outcomes for the following prompt: "
 }
 
 alias cf='chat_flippity'
