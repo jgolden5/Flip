@@ -99,6 +99,9 @@ chat_flippity() {
       =)
         echo "current prompt = \"$full_prompt\""
         ;;
+      \*)
+        random_prompt
+        ;;
       \")
         find_quote
         flippity_prompt && break
@@ -252,6 +255,7 @@ help_chat_flippity() {
   echo "x = get n e(x)amples based on prompt"
   echo "z = get n possible outcome(z) for this prompt"
   echo "= = print entirety of full_prompt so far"
+  echo "* = generate random prompt on following subject (leave blank for complete randomness) (*)"
   echo '" = generate a famous quote (") about the following prompt'
   echo "? = like 'h', generate this help prompt for a list of chat_flippity commands"
 }
@@ -392,6 +396,17 @@ find_quote() {
   else
     full_prompt+="Find a famous quote about the following: "
   fi
+}
+
+random_prompt() {
+  read -p "How many random topics do you want to get generated? " number_of_random_topics
+  read -p "What type of topic do you want random subtopics of? (Leave blank for pure randomness) " overarching_topic
+  if [[ "$overarching_topic" ]]; then
+    full_prompt+="Generate $number_of_random_topics random topics about $overarching_topic: "
+  else
+    full_prompt+="Generate $number_of_random_topics random topics."
+  fi
+  echo "Random text message was added to prompt"
 }
 
 verify_question_and_answer() {
