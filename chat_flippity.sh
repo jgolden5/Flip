@@ -96,11 +96,15 @@ chat_flippity() {
         possible_outcomes
         flippity_prompt && break
         ;;
-      =)
-        echo "current prompt = \"$full_prompt\""
+      %)
+        percentage_prompt
+        flippity_prompt && break
         ;;
       \*)
         random_prompt
+        ;;
+      =)
+        echo "current prompt = \"$full_prompt\""
         ;;
       \")
         find_quote
@@ -254,8 +258,9 @@ help_chat_flippity() {
   echo "w = define a (w)ord as used in the following prompt"
   echo "x = get n e(x)amples based on prompt"
   echo "z = get n possible outcome(z) for this prompt"
-  echo "= = print entirety of full_prompt so far"
+  echo "% = generate an answer in percentage form only, e.g. 50(%)"
   echo "* = generate random prompt on following subject (leave blank for complete randomness) (*)"
+  echo "= = print entirety of full_prompt so far"
   echo '" = generate a famous quote (") about the following prompt'
   echo "? = like 'h', generate this help prompt for a list of chat_flippity commands"
 }
@@ -396,6 +401,10 @@ find_quote() {
   else
     full_prompt+="Find a famous quote about the following: "
   fi
+}
+
+percentage_prompt() {
+  full_prompt+="Answer the following with a percentage only: "
 }
 
 random_prompt() {
