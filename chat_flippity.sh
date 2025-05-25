@@ -103,6 +103,10 @@ chat_flippity() {
       \*)
         random_prompt
         ;;
+      -)
+        condense_text
+        flippity_prompt && break
+        ;;
       =)
         echo "current prompt = \"$full_prompt\""
         ;;
@@ -260,6 +264,7 @@ help_chat_flippity() {
   echo "z = get n possible outcome(z) for this prompt"
   echo "% = generate an answer in percentage form only, e.g. 50(%)"
   echo "* = generate random prompt on following subject (leave blank for complete randomness) (*)"
+  echo "- = condense the prompt without losing any main points (-)"
   echo "= = print entirety of full_prompt so far"
   echo '" = generate a famous quote (") about the following prompt'
   echo "? = like 'h', generate this help prompt for a list of chat_flippity commands"
@@ -405,6 +410,7 @@ find_quote() {
 
 percentage_prompt() {
   full_prompt+="Answer the following with a percentage only: "
+  echo "The following prompt will be responded to with a percentage"
 }
 
 random_prompt() {
@@ -416,6 +422,11 @@ random_prompt() {
     full_prompt+="Generate $number_of_random_topics random topics."
   fi
   echo "Random text message was added to prompt"
+}
+
+condense_text() {
+  full_prompt+="Condense the following while still keeping all the main points: "
+  echo "The next prompt you enter will be condensed while keeping the main points"
 }
 
 verify_question_and_answer() {
