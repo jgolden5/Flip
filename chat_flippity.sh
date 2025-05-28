@@ -13,6 +13,9 @@ chat_flippity() {
         age
         flippity_prompt && break
         ;;
+      A)
+        choose_your_own_adventure && break
+        ;;
       b)
         fill_blanks
         flippity_prompt && break
@@ -201,6 +204,11 @@ welcome_to_chat_flippity() {
 age() {
   read -p "enter age here: " age
   full_prompt+="Answer the following question as though I was $age years old: "
+}
+
+choose_your_own_adventure() {
+  full_prompt+='Present me with a situation, let me type in an exact response as a prompt, and then constantly continue the story from there, and give me a "choose your own adventure"-style story with that format. Ask me for (1) the setting, (2) the characters, and (3) the role I play in the story, then begin telling the story.'
+  echo "Choose your own adventure prompt was copied to the clipboard"
 }
 
 fill_blanks() {
