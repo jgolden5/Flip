@@ -75,6 +75,10 @@ chat_flippity() {
         get_sources $number_of_sources
         flippity_prompt && break
         ;;
+      t)
+        translate
+        flippity_prompt && break
+        ;;
       u)
         specify_question_type
         flippity_prompt && break
@@ -264,6 +268,7 @@ help_chat_flippity() {
   echo "q = (q)uit chat_flippity"
   echo "r = (r)efresh chat by forgetting all other things I entered into this chat"
   echo "s = get n (s)ources and a brief summary of prompt"
+  echo "t = (t)ranslate from one langauge to another (whether it's a speaking language or programming language)"
   echo "u = ask the following prompt formatted based on a specific q(u)estion focus"
   echo "v = (v)erify whether the following question and answer is accurate with accuracy scale and explanation"
   echo "V = (V)erify whether the following question and answer is accurate in quiet mode--just with a 1-5 accuracy scale"
@@ -446,6 +451,12 @@ verify_question_and_answer() {
     read -p "Please enter the question(s) AND answer(s) you want chat gippity to verify (in the form: Question? answer. Question n? answer n.) " question_and_answer
     full_prompt+=". Then, verify if the following question and answer represent an answer that accurately answers the question, and add any clarification if needed.  $question_and_answer."
   fi
+}
+
+translate() {
+  read -p "Which language are you translating from? " lang_from
+  read -p "Which language are you translating to? " lang_to
+  full_prompt+="Translate the following from $lang_from to $lang_to: "
 }
 
 specify_question_type() {
