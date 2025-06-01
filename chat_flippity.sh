@@ -96,7 +96,7 @@ chat_flippity() {
         flippity_prompt && break
         ;;
       x)
-        give_examples
+        levels_of_explanation_by_complexity
         flippity_prompt && break
         ;;
       z)
@@ -273,7 +273,7 @@ help_chat_flippity() {
   echo "v = (v)erify whether the following question and answer is accurate with accuracy scale and explanation"
   echo "V = (V)erify whether the following question and answer is accurate in quiet mode--just with a 1-5 accuracy scale"
   echo "w = define a (w)ord as used in the following prompt"
-  echo "x = get n e(x)amples based on prompt"
+  echo "x = give n different levels of e(x)planation of varying comple(x)ity for the following prompt"
   echo "z = get n possible outcome(z) for this prompt"
   echo "% = generate an answer in percentage form only, e.g. 50(%)"
   echo "* = generate random prompt on following subject (leave blank for complete randomness) (*)"
@@ -469,9 +469,18 @@ define_word_in_prompt() {
   full_prompt+="Please define the word $word as used in the following prompt: "
 }
 
-give_examples() {
-  read -p "How many examples do you want on the topic you're about to ask about? " x
-  full_prompt+="Please give $x examples to help clarify the following (note that each example should provide unique yet relevant value): "
+levels_of_explanation_by_complexity() {
+  read -p "How many levels of explanation do you want to give for the following prompt? " n
+  full_prompt+="Explain the following prompt in $n different levels of complexity. The levels are "
+  for ((i=1; i<=n; i++)); do
+    read -p "How do you want Chat Flippity to explain level $i? " level_i_explanation
+    full_prompt+="$level_i_explanation"
+    if ((i < n)); then
+      full_prompt+=", "
+    else
+      full_prompt+=": "
+    fi
+  done
 }
 
 possible_outcomes() {
