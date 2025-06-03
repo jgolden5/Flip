@@ -495,17 +495,22 @@ define_word_in_prompt() {
 }
 
 levels_of_explanation_by_complexity() {
-  read -p "How many levels of explanation do you want to give for the following prompt? " n
-  full_prompt+="Explain the following prompt in $n different levels of complexity. The levels are "
-  for ((i=1; i<=n; i++)); do
-    read -p "How do you want Chat Flippity to explain level $i? " level_i_explanation
-    full_prompt+="$level_i_explanation"
-    if ((i < n)); then
-      full_prompt+=", "
-    else
-      full_prompt+=": "
-    fi
-  done
+  read -p "How many levels of explanation do you want to give for the following prompt (add * at the end of the number for generic levels)? " n
+  if [[ $n =~ \* ]]; then
+    n=$(echo "$n" | sed 's/\(.*\)\*\(.*\)/\1\2/')
+    full_prompt+="Generate $n explanations from simple to progressively more technical/complex about the following: "
+  else
+    full_prompt+="Explain the following prompt in $n different levels of complexity. The levels are "
+    for ((i=1; i<=n; i++)); do
+      read -p "How do you want Chat Flippity to explain level $i? " level_i_explanation
+      full_prompt+="$level_i_explanation"
+      if ((i < n)); then
+        full_prompt+=", "
+      else
+        full_prompt+=": "
+      fi
+    done
+  fi
 }
 
 possible_outcomes() {
