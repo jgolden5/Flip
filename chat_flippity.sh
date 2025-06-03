@@ -1,6 +1,7 @@
 #!/bin/bash
 
 full_prompt=""
+ai=
 
 chat_flippity() {
   welcome_to_chat_flippity
@@ -102,6 +103,10 @@ chat_flippity() {
       z)
         possible_outcomes
         flippity_prompt && break
+        ;;
+      1)
+        ai=chatgpt
+        echo "AI was set to chatgpt"
         ;;
       %)
         percentage_prompt
@@ -275,6 +280,7 @@ help_chat_flippity() {
   echo "w = define a (w)ord as used in the following prompt"
   echo "x = give n different levels of e(x)planation of varying comple(x)ity for the following prompt"
   echo "z = get n possible outcome(z) for this prompt"
+  echo "1 = set AI to (1) [ChatGPT]"
   echo "% = generate an answer in percentage form only, e.g. 50(%)"
   echo "* = generate random prompt on following subject (leave blank for complete randomness) (*)"
   echo "- = condense the prompt without losing any main points (-)"
@@ -386,10 +392,17 @@ flippity_prompt() {
   read -n1 -p "Ready to use prompt? " end_prompt
     echo
     if [[ $end_prompt == "y" ]]; then
-      number_of_words=$(echo $full_prompt | wc -w)
-      echo "$number_of_words words successfully copied into clipboard"
-      echo "$full_prompt" | pbcopy
-      return 0
+      case $ai in
+        chatgpt)
+          open "https://chatgpt.com/?q=$full_prompt"
+          ;;
+        *)
+          number_of_words=$(echo $full_prompt | wc -w)
+          echo "$number_of_words words successfully copied into clipboard"
+          echo "$full_prompt" | pbcopy
+          return 0
+          ;;
+      esac
     else
       full_prompt+=' '
       return 1
