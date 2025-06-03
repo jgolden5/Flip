@@ -1,6 +1,7 @@
 #!/bin/bash
 
 full_prompt=""
+ai=${clipboard:$ai}
 
 chat_flippity() {
   welcome_to_chat_flippity
@@ -104,7 +105,7 @@ chat_flippity() {
         flippity_prompt && break
         ;;
       0)
-        ai=
+        ai=clipboard
         echo "AI was unset (clipboard)"
         ;;
       1)
@@ -397,7 +398,7 @@ flippity_prompt() {
     read -p "enter prompt here: " prompt
     full_prompt+=$prompt
   fi
-  echo "Current prompt so far = \"${full_prompt}\""
+  echo "Current prompt so far = \"${full_prompt}\" [$ai]"
   read -n1 -p "Ready to use prompt? " end_prompt
     echo
     if [[ $end_prompt == "y" ]]; then
