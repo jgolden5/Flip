@@ -1,7 +1,6 @@
 #!/bin/bash
 
 full_prompt=""
-ai=
 
 chat_flippity() {
   welcome_to_chat_flippity
@@ -103,6 +102,10 @@ chat_flippity() {
       z)
         possible_outcomes
         flippity_prompt && break
+        ;;
+      0)
+        ai=
+        echo "AI was unset (clipboard)"
         ;;
       1)
         ai=chatgpt
@@ -280,6 +283,7 @@ help_chat_flippity() {
   echo "w = define a (w)ord as used in the following prompt"
   echo "x = give n different levels of e(x)planation of varying comple(x)ity for the following prompt"
   echo "z = get n possible outcome(z) for this prompt"
+  echo "0 = set AI to (0) [clipboard]"
   echo "1 = set AI to (1) [ChatGPT]"
   echo "% = generate an answer in percentage form only, e.g. 50(%)"
   echo "* = generate random prompt on following subject (leave blank for complete randomness) (*)"
