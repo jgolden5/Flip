@@ -111,6 +111,14 @@ chat_flippity() {
         ai=chatgpt
         echo "AI was set to chatgpt"
         ;;
+      2)
+        ai=grok
+        echo "AI was set to grok"
+        ;;
+      3)
+        ai=gemini
+        echo "AI was set to gemini"
+        ;;
       %)
         percentage_prompt
         flippity_prompt && break
@@ -285,6 +293,8 @@ help_chat_flippity() {
   echo "z = get n possible outcome(z) for this prompt"
   echo "0 = set AI to (0) [clipboard]"
   echo "1 = set AI to (1) [ChatGPT]"
+  echo "2 = set AI to (2) [Grok]"
+  echo "3 = set AI to (3) [Gemini]"
   echo "% = generate an answer in percentage form only, e.g. 50(%)"
   echo "* = generate random prompt on following subject (leave blank for complete randomness) (*)"
   echo "- = condense the prompt without losing any main points (-)"
@@ -399,6 +409,12 @@ flippity_prompt() {
       case $ai in
         chatgpt)
           open "https://chatgpt.com/?q=$full_prompt"
+          ;;
+        grok)
+          open "https://grok.com/?q=$full_prompt"
+          ;;
+        gemini)
+          open "https://gemini.google.com/app/62b2cd552da293d0?q=$full_prompt"
           ;;
         *)
           number_of_words=$(echo $full_prompt | wc -w)
