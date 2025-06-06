@@ -458,7 +458,7 @@ qdd_assistor() {
     full_prompt+="Generate 8 answers about the following question, which sum up all of its most important aspects and increase my understanding about the following question: $question (Note that each answer must not be more than 8 words long)"
   elif [[ $option == "u" ]]; then
     read -p "Put the question(s) and list of answers you want answered here: " answers
-    full_prompt+="Generate a project for each of the following answers, which is tailored for each respective answer in order to play around with said answer and understand WHY the answer to its respective question is what it is: $answers"
+    full_prompt+="Generate a separate mini-project tailored to each of the following answers in order to play around with said answer and understand WHY the answer to its respective question is what it is: $answers"
   elif [[ $option =~ Q|x ]]; then
     echo "Quitting qdd_assistor"
   else
