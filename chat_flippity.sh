@@ -66,6 +66,9 @@ chat_flippity() {
         flippity_prompt && break
         ;;
       q)
+        qdd_assistor
+        ;;
+      Q)
         echo "quitting chat flippity..." && break
         ;;
       r)
@@ -278,7 +281,8 @@ help_chat_flippity() {
   echo "n = respond to the prompt with (n) unique yet insightful responses"
   echo "o = respond to the following with c(o)de in the specified language"
   echo "p = generate a final (p)rompt after making modifications"
-  echo "q = (q)uit chat_flippity"
+  echo "q = (q)dd assistor generates a prompt that facilitates learning with question_driven_development app"
+  echo "Q = (Q)uit chat_flippity"
   echo "r = (r)efresh chat by forgetting all other things I entered into this chat"
   echo "s = get n (s)ources and a brief summary of prompt"
   echo "t = (t)ranslate from one langauge to another (whether it's a speaking language or programming language)"
@@ -422,6 +426,39 @@ flippity_prompt() {
     fi
 }
 
+qdd_assistor() {
+  echo "Choose a letter associated with one of the following options: "
+  echo "[y] Based on a given general vibe/topic, generate a generic category of topics (library) for said topic idea"
+  echo "[t] For a given library, you need 8 terms, each with 8 questions, 8 answers, and a different project to understand each answer"
+  echo "[q] For a given term, you need 8 questions"
+  echo "[w] For 8 given questions, you need 8 answers to each question"
+  echo "[u] For 8 given answers, you need a project (for each) in order to use and understand the answers better"
+  echo "[Q|x] Quit qdd_assistor"
+  read -n1 -p "Enter your choice here: " option
+  echo
+  if [[ $option == "y" ]]; then
+    read -p "What is the general topic/vibe of what you would like chat gippity to generate a library for? " topic_vibe
+    full_prompt+="I'm using a tool I made which divides topics up by library, which is the most broad category, term, which is a more specific category of a thing (there are 8 terms per library), then questions about said term (8 questions per term, each of which only has 8 questions), and 8 answers for each question (a total of 64 answers with 8 questions). I don't need you to give me terms, questions, or answers yet. Right now, I just want you to give me a library idea (1 or 2 words max for a general topic which can be subdivided into at least 8 terms), and base that idea on the following: $topic_vibe"
+  elif [[ $option == "t" ]]; then
+    read -p "Which library do you want to generate 8 terms for? " library
+    full_prompt+="Generate 8 \"sub-terms\" directly related to and facilitating an increased depth of understanding about the following topic: $library (note that each term should be 1 or 2 words long max)"
+  elif [[ $option == "q" ]]; then
+    read -p "Which term do you want to generate 8 questions for? " term
+    full_prompt+="Generate 8 questions about $term which sum up all of the most important aspects of $term in order for me to go from understanding little about $term, to understanding quite a lot about $term. (Note that each question must not be more than 8 words long)"
+  elif [[ $option == "w" ]]; then
+    read -p "Which term do you want to generate 8 answers for? " question
+    full_prompt+="Generate 8 answers about the following question, which sum up all of its most important aspects and increase my understanding about the following question: $question (Note that each answer must not be more than 8 words long)"
+  elif [[ $option == "u" ]]; then
+    read -p "Put the question(s) and list of answers you want answered here: " answers
+    full_prompt+="Generate a project for each of the following answers, which is tailored for each respective answer in order to play around with said answer and understand WHY the answer to its respective question is what it is: $answers"
+  elif [[ $option =~ Q|x ]]; then
+    echo "Quitting qdd_assistor"
+  else
+    echo "Letter was not recognized. Please try again."
+    qdd_assistor
+  fi
+}
+
 refresh_chat() {
   full_prompt+="Refresh anything I said in this chat previously, and start afresh from now on. "
   echo "Refresh message was added to prompt"
@@ -497,10 +534,10 @@ define_word_in_prompt() {
 
 levels_of_explanation_by_complexity() {
   read -p "How many levels of explanation do you want to give for the following prompt (add * at the end of the number for generic levels)? " n
-  if [[ $n =~ \* ]]; then
-    n=$(echo "$n" | sed 's/\(.*\)\*\(.*\)/\1\2/')
+  if [[ ! $n =~ \* ]]; then
     full_prompt+="Generate $n explanations from simple to progressively more technical/complex about the following: "
   else
+    n=$(echo "$n" | sed 's/\(.*\)\*\(.*\)/\1\2/')
     full_prompt+="Explain the following prompt in $n different levels of complexity. The levels are "
     for ((i=1; i<=n; i++)); do
       read -p "How do you want Chat Flippity to explain level $i? " level_i_explanation
