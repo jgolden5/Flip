@@ -29,7 +29,8 @@ chat_flippity() {
         delete_current_prompt
         ;;
       e)
-        elephant && break
+        elephant
+        flippity_prompt && break
         ;;
       f)
         funny_lie
@@ -274,7 +275,7 @@ help_chat_flippity() {
   echo "b = answer prompt by filling in words and details for the (b)lank spaces"
   echo "c = answer prompt as though chatgpt was a certain (c)haracter"
   echo "d = (d)elete current prompt"
-  echo "e = (e)lephant challenge--based on elephant principle, gives user practice breaking large problems into smaller ones"
+  echo "e = (e)lephant principle, break a bigger problem into n smaller sub-problems"
   echo "f = tell chatgpt a (f)unny lie about myself to spice things up a bit"
   echo "g = have chatgpt format my prompt in a way that would be optimized for chat(g)pt to answer"
   echo "h = generate this (h)elp prompt for a list of chat_flippity commands"
@@ -313,13 +314,8 @@ delete_current_prompt() {
 }
 
 elephant() { #based on the elephant principle of eating an elephant one bite at a time by simplifying complex problems
-  read -p "Please specify a topic on which to generate a complex problem test (leave blank for a random one): " problem_topic
-  if [[ "$problem_topic" ]]; then
-    full_prompt+="Please give me a complex problem for me to practice breaking complex problems down into simple problems. Make the super complex problem related to $problem_topic. I will attempt to break it down, and you can grade my response based on how well I did breaking the complex problems down into practical, well-thought, smaller problems. Be strict on this grade, but if I do SUPER good--like as good as humanly possible, give me an A+. Please point out any problems and rank their severity on a scale of 1-5, 1 being a mild concern, and 5 being a severe mistake. "
-  else
-    full_prompt+="Please give me a complex problem for me to practice breaking complex problems down into simple problems. I will attempt to break it down, and you can grade my response based on how well I did breaking the complex problems down into practical, well-thought, smaller problems. Be strict on this grade, but if I do SUPER good--like as good as humanly possible, give me an A+. Please point out any problems and rank their severity on a scale of 1-5, 1 being a mild concern, and 5 being a severe mistake. "
-  fi
-  echo "$full_prompt" | pbcopy && echo "elephant challenge was copied to clipboard"
+  read -p "How many sub-problems would you like to break the bigger problem down into? " n
+  full_prompt+="Break the following larger problem into $n smaller sub-problems in order to solve the big picture issue one bitable step at a time: "
 }
 
 funny_lie() {
@@ -567,3 +563,4 @@ possible_outcomes() {
 alias cf='chat_flippity'
 alias ep="echo $full_prompt"
 alias scf='source chat_flippity.sh'
+alias vcf='vim chat_flippity.sh'
