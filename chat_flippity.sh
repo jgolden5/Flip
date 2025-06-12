@@ -437,6 +437,7 @@ qdd_assistor() {
   echo "[q] For a given term, you need 8 questions"
   echo "[w] For 8 given questions, you need 8 answers to each question"
   echo "[u] For 8 given answers, you need a project (for each) in order to use and understand the answers better"
+  echo "[i] Break a given mini-project down into 8 simple, accomplishable steps, as well as 2-4 ideas of how to throw my own creative spins on said mini-project"
   echo "[Q|x] Quit qdd_assistor"
   read -n1 -p "Enter your choice here: " option
   echo
@@ -455,6 +456,9 @@ qdd_assistor() {
   elif [[ $option == "u" ]]; then
     read -p "Put the question(s) and list of answers you want answered here: " answers
     full_prompt+="Generate a separate mini-project tailored to each of the following answers in order to play around with said answer and understand WHY the answer to its respective question is what it is: $answers"
+  elif [[ $option == "i" ]]; then
+    read -p "Put the mini-project here, each with their respective answer, mini-project, and goal (for best quality results, keep it to only one mini-project): " mini_projects
+    full_prompt+="Generate 8 simple, accomplishable steps for the following mini-project. In addition to 8 steps, generate 2-4 ideas of how to throw my own creative spins on said mini-project. (Keep in mind the mini-project will be in the format: 1) Answer to a question that the mini-project will clarify, 2) Mini-project, and 3) Goal of said mini-project): $mini_projects"
   elif [[ $option =~ Q|x ]]; then
     echo "Quitting qdd_assistor"
   else
