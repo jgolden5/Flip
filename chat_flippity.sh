@@ -43,6 +43,9 @@ chat_flippity() {
       h|\?)
         help_chat_flippity
         ;;
+      H)
+        help_chat_flippity | less
+        ;;
       i)
         filibuster
         flippity_prompt && break
@@ -279,6 +282,7 @@ help_chat_flippity() {
   echo "f = tell chatgpt a (f)unny lie about myself to spice things up a bit"
   echo "g = have chatgpt format my prompt in a way that would be optimized for chat(g)pt to answer"
   echo "h = generate this (h)elp prompt for a list of chat_flippity commands"
+  echo "H = open (H)elp prompt using less pager to facilitate searching and viewing"
   echo "i = f(i)libuster chat gippity's response for n units of time"
   echo "l = explicitly control (l)ength of chatgpt's output"
   echo "L = clear/refresh the screen as with ^(L)"
