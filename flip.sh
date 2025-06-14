@@ -32,7 +32,7 @@ execute_op() {
   else
     case $op in
       a)
-        prompt="$prompt A"
+        as_age "$prompt"
         ;;
       b)
         prompt="B + $prompt"
@@ -47,5 +47,7 @@ execute_op() {
   fi
 }
 
-#expected output for test: B + C = Test A
-#to get this output, user must run 'flip -acb Test'
+as_age() {
+  read -p "What age should AI treat you as? " age
+  prompt="Respond to the following as though I was $age years old: $prompt"
+}
