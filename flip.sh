@@ -4,18 +4,17 @@ prompt=""
 ai="${ai:-$clipboard}"
 
 flip() {
-  local args=("$@")
-  prompt="${args[-1]}"
-  unset 'args[-1]'
   local ops="$1" # options: eg. "-abc"
-  local param_index=2
-  local op_index=1
-  while [[ $op_index -lt ${#ops} ]]; do
+  local param_index=$((${#ops} + 1))
+  prompt="${!param_index}"
+  param_index=$((param_index - 1))
+  local op_index=$((${#ops} - 1))
+  while [[ $op_index -gt 0 ]]; do
     local op="${ops:$op_index:1}"
     local param="${!param_index}"
     execute_op "$op" "$param"
-    ((op_index++))
-    ((param_index++))
+    ((op_index--))
+    ((param_index--))
   done
   echo "Final Prompt = $prompt"
 }
