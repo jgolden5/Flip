@@ -1,7 +1,7 @@
 #!/bin/bash
 
 full_prompt=""
-ai=${clipboard:$ai}
+ai="${ai:-$clipboard}"
 
 chat_flippity() {
   welcome_to_chat_flippity
@@ -138,7 +138,7 @@ chat_flippity() {
         flippity_prompt && break
         ;;
       =)
-        echo "current prompt = \"$full_prompt\""
+        echo "current prompt = \"$full_prompt\" [$ai]"
         ;;
       \")
         find_quote
