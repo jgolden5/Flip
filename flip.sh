@@ -43,9 +43,9 @@ execute_op() { #this function is generified like this so that the user may choos
 ai_perspective() {
   local role="$1"
   if [[ $role ]]; then
-    prompt="Respond to the following as though you were $role: $prompt"
+    prompt="You are $role: $prompt"
   else
-    read -p "Please describe the perspective/role ChatGPT should respond to you with: " role
+    read -p "Please describe AI's role: " role
     user_perspective "$role"
   fi
 }
@@ -53,9 +53,11 @@ ai_perspective() {
 user_perspective() {
   local role="$1"
   if [[ $role ]]; then
-    prompt="Respond to the following as though I was $role: $prompt"
+    prompt="I am $role: $prompt"
   else
-    read -p "Please describe what chatGPT should treat you as: " role
+    read -p "Please describe who you are/want to be treated as to AI: " role
     user_perspective "$role"
   fi
 }
+
+alias sf='source flip.sh'
