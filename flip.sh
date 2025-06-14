@@ -26,6 +26,9 @@ execute_op() { #this function is generified like this so that the user may choos
     return 1
   else
     case "$op" in
+      a)
+        ai_perspective "$param"
+        ;;
       u)
         user_perspective "$param"
         ;;
@@ -33,6 +36,16 @@ execute_op() { #this function is generified like this so that the user may choos
         echo "Op \"$op\" not recognized"
         ;;
     esac
+  fi
+}
+
+ai_perspective() {
+  local role="$1"
+  if [[ $role ]]; then
+    prompt="Respond to the following as though you were $role: $prompt"
+  else
+    read -p "Please describe the perspective/role ChatGPT should respond to you with: " role
+    user_perspective "$role"
   fi
 }
 
