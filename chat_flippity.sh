@@ -513,8 +513,13 @@ random_prompt() {
 }
 
 condense_text() {
-  full_prompt+="Condense the following while still keeping all the main points: "
-  echo "The next prompt you enter will be condensed while keeping the main points"
+  read -p "What size do you want to condense the prompt to (eg. 5 words, 1 sentence, 3 paragraphs, etc.)? " condensed_size
+  if [[ ! $condensed_size ]]; then
+    echo "Using default condensed size for prompt--1 paragraph"
+    condensed_size="1 paragraph"
+  fi
+  full_prompt+="Condense the following prompt to $condensed_size while still keeping all the main points: "
+  echo "The next prompt you enter will be condensed to $condensed_size while keeping the main points"
 }
 
 verify_question_and_answer() {
