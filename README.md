@@ -1,2 +1,2 @@
-# Chat Flippity
-I made a project entirely in bash called "Chat Flippity" (the title being jokingly based on the name some people have for ChatGPT--"Chat Gippity"), and the point of this project is to facilitate AI prompt generation with a collection of highly tunable templates. The final prompt then either gets copied to the clipboard or pasted immediately into a chatGPT or Grok chat via direct url search with the prompt integrated into the url (the user controls this). Any suggestions to the project can be made simply by raising an issue, as the project is small enough to not need any formal instructions for contributors as of right now. Pull requests and issues are welcome! Help make my AI assistors better, and I'll help with yours--promise!
+# Flip (AKA. Chat Flippity)
+CLI-based AI prompt generation assister. Improves AI response quality by putting the power of prompt fusion into practice.
