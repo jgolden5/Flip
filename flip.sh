@@ -4,50 +4,44 @@ prompt=""
 ai="${ai:-$clipboard}"
 
 flip() {
-  if [[ $1 =~ ^- ]]; then
-    ops="${1:1}"
-    shift
-    prompt="$@"
-    execute_ops $ops
-  else
-    echo "First flip parameter \"$1\" was NOT a flag"
-  fi
-  echo "Flip Prompt = $prompt"
+  local ops="$1" # options: eg. "-abc"
+  local prompt=$2 # prompt: eg. "Why is life so dang good?"
+  local param_index=3
+  local op_index=1
+  while [[ $op_index -lt ${#ops} ]]; do
+    local op="${ops:$op_index:1}"
+    local param="${!param_index}"
+    execute_op "$op" "$param"
+    ((op_index++))
+    ((param_index++))
+  done
+  echo "Final Prompt = $prompt"
 }
 
-execute_ops() {
-  first_op="${1:0:1}"
-  execute_op $first_op
-  remaining_ops="${1:1}"
-  if [[ $remaining_ops ]]; then
-    execute_ops $remaining_ops
-  fi
-}
-
-execute_op() {
+execute_op() { #this function is generified like this so that the user may choose a unique order for the options, and flip will behave differently based on chosen order
   op="$1"
+  param="$2"
   if [[ ${#op[@]} -gt 1 ]]; then
     echo "Op is too long"
     return 1
   else
-    case $op in
-      a)
-        as_age "$prompt"
-        ;;
-      b)
-        prompt="B + $prompt"
-        ;;
-      c)
-        prompt="C = $prompt"
+    case "$op" in
+      u)
+        user_perspective "$param"
         ;;
       *)
-        echo "Op not recognized"
+        echo "Op \"$op\" not recognized"
         ;;
     esac
   fi
 }
 
-as_age() {
-  read -p "What age should AI treat you as? " age
-  prompt="Respond to the following as though I was $age years old: $prompt"
+user_perspective() {
+  local role="$1"
+  if [[ $role ]]; then
+    prompt="Respond to the following as though I was $role: $prompt"
+  else
+    read -p "Please describe what chatGPT should treat you as: " role
+    user_perspective "$role"
+  fi
 }
