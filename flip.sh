@@ -16,7 +16,7 @@ flip() {
     ((op_index--))
     ((param_index--))
   done
-  echo "Final Prompt = $prompt"
+  echo "$prompt" | pbcopy && echo "Prompt \"$prompt\" was successfully copied to the clipboard"
 }
 
 execute_op() { #this function is generified like this so that the user may choose a unique order for the options, and flip will behave differently based on chosen order
