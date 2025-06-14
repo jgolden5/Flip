@@ -4,9 +4,11 @@ prompt=""
 ai="${ai:-$clipboard}"
 
 flip() {
+  local args=("$@")
+  prompt="${args[-1]}"
+  unset 'args[-1]'
   local ops="$1" # options: eg. "-abc"
-  local prompt=$2 # prompt: eg. "Why is life so dang good?"
-  local param_index=3
+  local param_index=2
   local op_index=1
   while [[ $op_index -lt ${#ops} ]]; do
     local op="${ops:$op_index:1}"
