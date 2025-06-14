@@ -16,7 +16,7 @@ flip() {
     ((op_index--))
     ((param_index--))
   done
-  echo "$prompt" | pbcopy && echo "Prompt \"$prompt\" was successfully copied to the clipboard"
+  choose_messanger
 }
 
 execute_op() { #this function is generified like this so that the user may choose a unique order for the options, and flip will behave differently based on chosen order
@@ -38,6 +38,19 @@ execute_op() { #this function is generified like this so that the user may choos
         ;;
     esac
   fi
+}
+
+choose_messanger() {
+  echo "0 = Clipboard"
+  echo "1 = ChatGPT"
+  echo "2 = Grok"
+  echo "3 = Gemini"
+  read -n1 -p "Which of the above messangers would you like to choose (default 0)? " messanger
+  case $messanger in
+    *)
+      echo $prompt | pbcopy && echo "The following prompt was successfully copied to the clipboard: $prompt"
+      ;;
+  esac
 }
 
 ai_perspective() {
