@@ -5,18 +5,35 @@ ai="${ai:-$clipboard}"
 
 flip() {
   local ops="$1" # options: eg. "-abc"
-  local param_index=$((${#ops} + 1))
-  prompt="${!param_index}"
-  param_index=$((param_index - 1))
-  local op_index=$((${#ops} - 1))
-  while [[ $op_index -gt 0 ]]; do
-    local op="${ops:$op_index:1}"
-    local param="${!param_index}"
-    execute_op "$op" "$param"
-    ((op_index--))
-    ((param_index--))
-  done
-  choose_messanger
+  if [[ $ops == '--help' ]]; then
+    print_flip_help "$2"
+  else
+    local param_index=$((${#ops} + 1))
+    prompt="${!param_index}"
+    param_index=$((param_index - 1))
+    local op_index=$((${#ops} - 1))
+    while [[ $op_index -gt 0 ]]; do
+      local op="${ops:$op_index:1}"
+      local param="${!param_index}"
+      execute_op "$op" "$param"
+      ((op_index--))
+      ((param_index--))
+    done
+    choose_messanger
+  fi
+}
+
+print_flip_help() {
+  echo "Usage:  flip [OPTIONS...] [ARG...]"
+  echo
+  echo "Fine-tune AI prompts to maximize effectiveness of responses"
+  echo
+  echo -e "Flag:\t\tName of function:\t\tHow prompt is modified:"
+  echo -e "\t-a,\t\tai_perspective   \t\t\"You are [param]. [prompt]\""
+  echo
+  echo -e "\t-u,\t\tuser_perspective \t\t\"I am [param]. [prompt]\""
+  echo
+  echo "Command's source code: https://github.com/jgolden5/Flip/blob/main/flip.sh"
 }
 
 execute_op() { #this function is generified like this so that the user may choose a unique order for the options, and flip will behave differently based on chosen order
@@ -56,7 +73,7 @@ choose_messanger() {
 ai_perspective() {
   local role="$1"
   if [[ $role ]]; then
-    prompt="You are $role: $prompt"
+    prompt="You are $role. $prompt"
   else
     read -p "Please describe AI's role: " role
     user_perspective "$role"
@@ -66,7 +83,7 @@ ai_perspective() {
 user_perspective() {
   local role="$1"
   if [[ $role ]]; then
-    prompt="I am $role: $prompt"
+    prompt="I am $role. $prompt"
   else
     read -p "Please describe who you are/want to be treated as to AI: " role
     user_perspective "$role"
