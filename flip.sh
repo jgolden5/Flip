@@ -75,7 +75,7 @@ choose_messenger() {
 }
 
 send_request() {
-  case $messenger in
+  case "${messenger,,}" in
     1|chatgpt|gpt)
       open "https://chatgpt.com/?q=$prompt"
       ;;
@@ -102,7 +102,7 @@ send_request() {
       ;;
     *)
       if [[ $messenger != clipboard ]] && [[ $messenger != 0 ]]; then
-        echo "Messenger \"$messenger\" not recognized. Using default clipboard"
+        echo "Messenger \"$messenger\" not recognized. Using default messenger: Clipboard"
       fi
       echo $prompt | pbcopy && echo "The following prompt was successfully copied to the clipboard: $prompt"
       ;;
