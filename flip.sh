@@ -1,7 +1,7 @@
 #!/bin/bash
 
 prompt=""
-ai="${ai:-$clipboard}"
+messenger=clipboard
 
 flip() {
   local ops="$1" # options: eg. "-abc"
@@ -19,6 +19,7 @@ flip() {
       ((op_index--))
       ((param_index--))
     done
+    send_request
   fi
 }
 
@@ -31,6 +32,7 @@ print_flip_help() {
   echo -e "\t-a,\t\tai_perspective   \t\t\"Respond to the following as though you were [param]: [prompt]\""
   echo
   echo -e "\t-m,\t\tchoose_messenger \t\t Options:"
+  echo -e "\t\t\t                    \t\t   0/clipboard/* (default)"
   echo -e "\t\t\t                    \t\t   1/chat(gpt)"
   echo -e "\t\t\t                    \t\t   2/grok/(x)ai"
   echo -e "\t\t\t                    \t\t   3/(gem)ini/google"
@@ -70,39 +72,41 @@ execute_op() { #this function is generified like this so that the user may choos
 
 choose_messenger() {
   messenger="$1"
-  if [[ "$messenger" ]]; then
-    case $messenger in
-      1|chatgpt|gpt)
-        open "https://chatgpt.com/?q=$prompt"
-        ;;
-      2|grok|xai|x)
-        open "https://grok.com/?q=$prompt"
-        ;;
-      3|gemini|gem|google)
-        open "https://gemini.google.com/app"
-        echo $prompt | pbcopy && echo "The following prompt was successfully copied to the clipboard for you to paste into Gemini's chat: $prompt"
-        ;;
-      4|claude|anthropic|cld)
-        open "https://claude.ai/new?q=$prompt"
-        ;;
-      5|mistral|french|mis)
-        open "https://chat.mistral.ai/chat/?q=$prompt"
-        ;;
-      6|meta|facebook|fb)
-        open "https://meta.ai/"
-        echo $prompt | pbcopy && echo "The following prompt was successfully copied to the clipboard for you to paste into Meta ai's chat: $prompt"
-        ;;
-      7|yi)
-        open "https://app.chathub.gg/chat/cloud-yi-large"
-        echo $prompt | pbcopy && echo "The following prompt was successfully copied to the clipboard for you to paste into Yi's chat: $prompt"
-        ;;
-      *)
-        echo $prompt | pbcopy && echo "The following prompt was successfully copied to the clipboard: $prompt"
-        ;;
-    esac
-  else
-    echo "$messenger is not a valid messenger. See flip --help under -m option to see all messenger options."
-  fi
+}
+
+send_request() {
+  case $messenger in
+    1|chatgpt|gpt)
+      open "https://chatgpt.com/?q=$prompt"
+      ;;
+    2|grok|xai|x)
+      open "https://grok.com/?q=$prompt"
+      ;;
+    3|gemini|gem|google)
+      open "https://gemini.google.com/app"
+      echo $prompt | pbcopy && echo "The following prompt was successfully copied to the clipboard for you to paste into Gemini's chat: $prompt"
+      ;;
+    4|claude|anthropic|cld)
+      open "https://claude.ai/new?q=$prompt"
+      ;;
+    5|mistral|french|mis)
+      open "https://chat.mistral.ai/chat/?q=$prompt"
+      ;;
+    6|meta|facebook|fb)
+      open "https://meta.ai/"
+      echo $prompt | pbcopy && echo "The following prompt was successfully copied to the clipboard for you to paste into Meta ai's chat: $prompt"
+      ;;
+    7|yi)
+      open "https://app.chathub.gg/chat/cloud-yi-large"
+      echo $prompt | pbcopy && echo "The following prompt was successfully copied to the clipboard for you to paste into Yi's chat: $prompt"
+      ;;
+    *)
+      if [[ $messenger != clipboard ]] && [[ $messenger != 0 ]]; then
+        echo "Messenger \"$messenger\" not recognized. Using default clipboard"
+      fi
+      echo $prompt | pbcopy && echo "The following prompt was successfully copied to the clipboard: $prompt"
+      ;;
+  esac
 }
 
 ai_perspective() {
