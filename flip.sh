@@ -8,17 +8,21 @@ flip() {
   if [[ $ops == '--help' ]]; then
     print_flip_help "$2"
   else
-    local param_index=$((${#ops} + 1))
-    prompt="${!param_index}"
-    param_index=$((param_index - 1))
-    local op_index=$((${#ops} - 1))
-    while [[ $op_index -gt 0 ]]; do
-      local op="${ops:$op_index:1}"
-      local param="${!param_index}"
-      execute_op "$op" "$param"
-      ((op_index--))
-      ((param_index--))
-    done
+    if [[ $ops =~ ^- ]]; then
+      local param_index=$((${#ops} + 1))
+      prompt="${!param_index}"
+      param_index=$((param_index - 1))
+      local op_index=$((${#ops} - 1))
+      while [[ $op_index -gt 0 ]]; do
+        local op="${ops:$op_index:1}"
+        local param="${!param_index}"
+        execute_op "$op" "$param"
+        ((op_index--))
+        ((param_index--))
+      done
+    else
+      prompt="$1"
+    fi
     send_request
   fi
 }
