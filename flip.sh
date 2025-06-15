@@ -28,7 +28,7 @@ print_flip_help() {
   echo "Fine-tune AI prompts to maximize effectiveness of responses"
   echo
   echo -e "Flag:\t\tName of function:\t\tHow prompt is modified:"
-  echo -e "\t-a,\t\tai_perspective   \t\t\"You are [param]. [prompt]\""
+  echo -e "\t-a,\t\tai_perspective   \t\t\"Respond to the following as though you were [param]: [prompt]\""
   echo
   echo -e "\t-m,\t\tchoose_messenger \t\t Options:"
   echo -e "\t\t\t                    \t\t   1/chat(gpt)"
@@ -39,7 +39,7 @@ print_flip_help() {
   echo -e "\t\t\t                    \t\t   6/meta/facebook/fb"
   echo -e "\t\t\t                    \t\t   7/yi"
   echo
-  echo -e "\t-u,\t\tuser_perspective \t\t\"I am [param]. [prompt]\""
+  echo -e "\t-u,\t\tuser_perspective \t\t\"Respond to the following as though I was [param]: [prompt]\""
   echo
   echo "Command's source code: https://github.com/jgolden5/Flip/blob/main/flip.sh"
 }
@@ -108,7 +108,7 @@ choose_messenger() {
 ai_perspective() {
   local role="$1"
   if [[ $role ]]; then
-    prompt="You are $role. $prompt"
+    prompt="Respond to the following as though you were $role: $prompt"
   else
     read -p "Please describe AI's role: " role
     user_perspective "$role"
@@ -118,7 +118,7 @@ ai_perspective() {
 user_perspective() {
   local role="$1"
   if [[ $role ]]; then
-    prompt="I am $role. $prompt"
+    prompt="Respond to the following as though I was $role: $prompt"
   else
     read -p "Please describe who you are/want to be treated as to AI: " role
     user_perspective "$role"
