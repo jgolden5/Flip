@@ -25,6 +25,7 @@ flip() {
     fi
     send_request
   fi
+  messenger=clipboard
 }
 
 print_flip_help() {
