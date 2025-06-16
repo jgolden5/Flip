@@ -47,6 +47,7 @@ print_flip_help() {
   echo -e "\t\t\t                    \t\t   5/(mis)tral/french"
   echo -e "\t\t\t                    \t\t   6/meta/facebook/fb"
   echo -e "\t\t\t                    \t\t   7/yi"
+  echo -e "\t\t\t                    \t\t   * (all of the above)"
   echo
   echo -e "\t-u,\t\tuser_perspective \t\t\"Respond to the following as though I was [param]: [prompt]\""
   echo
@@ -81,7 +82,13 @@ execute_op() { #this function is generified like this so that the user may choos
 }
 
 choose_messenger() {
-  messenger="$1"
+  if [[ $1 == "*" ]]; then
+    for i in {0..7}; do
+      flip -m "$i" "$prompt"
+    done
+  else
+    messenger="$1"
+  fi
 }
 
 send_request() {
