@@ -167,3 +167,4 @@ user_perspective() {
 }
 
 alias sf='source flip.sh'
+alias mai='flip -m "*"' #Mass AI send
