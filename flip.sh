@@ -49,6 +49,8 @@ print_flip_help() {
   echo -e "\t\t\t                    \t\t   7/yi"
   echo -e "\t\t\t                    \t\t   * (all of the above)"
   echo
+  echo -e "\t-n,\t\tget_n_responses  \t\t\"[prompt]. Give [param] responses.\""
+  echo
   echo -e "\t-u,\t\tuser_perspective \t\t\"Respond to the following as though I was [param]: [prompt]\""
   echo
   echo "Command's source code: https://github.com/jgolden5/Flip/blob/main/flip.sh"
@@ -71,6 +73,9 @@ execute_op() { #this function is generified like this so that the user may choos
       m)
         choose_messenger "$param"
         ;;
+      n)
+        get_n_responses "$param"
+        ;;
       u)
         user_perspective "$param"
         ;;
@@ -89,6 +94,11 @@ choose_messenger() {
   else
     messenger="$1"
   fi
+}
+
+get_n_responses() {
+  n="$1"
+  prompt="$prompt. Give $n responses."
 }
 
 send_request() {
@@ -139,7 +149,7 @@ ai_perspective() {
 format_output() {
   local format="$1"
   if [[ "$format" ]]; then
-    prompt="Respond to the following prompt using $format as the format for the response. $prompt"
+    prompt="Respond to the following prompt using $format as the format for the response: $prompt"
   else
     read -p "Please describe the format you want your response in: " format
     format_output "$format"
