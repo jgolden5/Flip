@@ -50,6 +50,8 @@ print_flip_help() {
   echo
   echo -e "\t-n,\t\tget_n_responses  \t\t\"[prompt]. Give [param] responses.\""
   echo
+  echo -e "\t-q,\t\tclarifying_questions  \t\t\"Ask [param] clarifying questions about the following prompt in order to understand my intent and optimize it for an LLM response: [prompt]\""
+  echo
   echo -e "\t-u,\t\tuser_perspective \t\t\"Respond to the following as though I was [param]: [prompt]\""
   echo
   echo "Command's source code: https://github.com/jgolden5/Flip/blob/main/flip.sh"
@@ -75,6 +77,9 @@ execute_op() { #this function is generified like this so that the user may choos
       n)
         get_n_responses "$param"
         ;;
+      q)
+        clarifying_questions "$param"
+        ;;
       u)
         user_perspective "$param"
         ;;
@@ -98,6 +103,11 @@ choose_messenger() {
 get_n_responses() {
   n="$1"
   prompt="$prompt. Give $n responses."
+}
+
+clarifying_questions() {
+  n="$1"
+  prompt="Ask $n clarifying questions about the following prompt in order to understand my intent and optimize it for an LLM response: $prompt."
 }
 
 send_request() {
