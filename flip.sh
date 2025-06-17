@@ -38,6 +38,8 @@ print_flip_help() {
   echo
   echo -e "\t-f,\t\tformat_output    \t\t\"Respond to the following prompt using [param] as the format for the response. [prompt]\""
   echo
+  echo -e "\t-l,\t\tcontrol_length   \t\t\"Respond to the following prompt in exactly [param]: [prompt]\""
+  echo
   echo -e "\t-m,\t\tchoose_messenger \t\t Options:"
   echo -e "\t\t\t                    \t\t   0/clipboard/* (default)"
   echo -e "\t\t\t                    \t\t   1/chat(gpt)"
@@ -71,6 +73,9 @@ execute_op() { #this function is generified like this so that the user may choos
       f)
         format_output "$param"
         ;;
+      l)
+        control_length "$param"
+        ;;
       m)
         choose_messenger "$param"
         ;;
@@ -90,6 +95,11 @@ execute_op() { #this function is generified like this so that the user may choos
   fi
 }
 
+control_length() {
+  length="$1"
+  prompt="Respond to the following prompt in exactly $length: $prompt"
+}
+
 choose_messenger() {
   if [[ $1 == "*" ]]; then
     for i in {0..7}; do
@@ -107,7 +117,7 @@ get_n_responses() {
 
 clarifying_questions() {
   n="$1"
-  prompt="Ask $n clarifying questions about the following prompt in order to understand my intent and optimize it for an LLM response: $prompt."
+  prompt="Ask $n clarifying questions about the following prompt in order to understand my intent and optimize it for an LLM response: $prompt"
 }
 
 send_request() {
