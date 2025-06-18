@@ -48,6 +48,9 @@ print_flip_help() {
   echo -e "\t\t\t                    \t\t   4/claude/anthropic/cld"
   echo -e "\t\t\t                    \t\t   5/(mis)tral/french"
   echo -e "\t\t\t                    \t\t   6/meta/facebook/fb"
+  echo -e "\t\t\t                    \t\t   7/microsoft/copilot/co"
+  echo -e "\t\t\t                    \t\t   8/deepseek/whale/china/ds"
+  echo -e "\t\t\t                    \t\t   9/huggingface/hug/hf"
   echo -e "\t\t\t                    \t\t   * (all of the above)"
   echo
   echo -e "\t-n,\t\tget_n_responses  \t\t\"[prompt]. Give [param] responses.\""
@@ -141,6 +144,17 @@ send_request() {
     6|meta|facebook|fb)
       open "https://meta.ai/"
       echo $prompt | pbcopy && echo "The following prompt was successfully copied to the clipboard for you to paste into Meta ai's chat: $prompt"
+      ;;
+    7|microsoft|copilot|co)
+      open "https://copilot.microsoft.com/"
+      echo $prompt | pbcopy && echo "The following prompt was successfully copied to the clipboard for you to paste into Microsoft Copilot's chat: $prompt"
+      ;;
+    8|deepseek|whale|china|ds)
+      open "https://chat.deepseek.com/"
+      echo $prompt | pbcopy && echo "The following prompt was successfully copied to the clipboard for you to paste into DeepSeek's chat: $prompt"
+      ;;
+    9|huggingface|hug|hf)
+      open "https://huggingface.co/chat/?q=$prompt"
       ;;
     *)
       if [[ $messenger != clipboard ]] && [[ $messenger != 0 ]]; then
