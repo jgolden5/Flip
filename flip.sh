@@ -105,7 +105,7 @@ control_length() {
 
 choose_messenger() {
   if [[ $1 == "*" ]]; then
-    for i in {0..7}; do
+    for i in {0..9}; do
       flip -m "$i" "$prompt"
     done
   else
@@ -195,5 +195,5 @@ user_perspective() {
   fi
 }
 
-alias sf='source flip.sh'
+alias sf='source flip.sh && source clipboard_queue.sh'
 alias mai='flip -m "*"' #Mass AI send
