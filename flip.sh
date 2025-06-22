@@ -105,7 +105,7 @@ control_length() {
 
 choose_messenger() {
   if [[ $1 == "*" ]]; then
-    for i in {0..9}; do
+    for i in {0..7}; do
       flip -m "$i" "$prompt"
     done
   else
@@ -148,13 +148,6 @@ send_request() {
     7|microsoft|copilot|co)
       open "https://copilot.microsoft.com/"
       echo $prompt | pbcopy && echo "The following prompt was successfully copied to the clipboard for you to paste into Microsoft Copilot's chat: $prompt"
-      ;;
-    8|deepseek|whale|china|ds)
-      open "https://chat.deepseek.com/"
-      echo $prompt | pbcopy && echo "The following prompt was successfully copied to the clipboard for you to paste into DeepSeek's chat: $prompt"
-      ;;
-    9|huggingface|hug|hf)
-      open "https://huggingface.co/chat/?q=$prompt"
       ;;
     *)
       if [[ $messenger != clipboard ]] && [[ $messenger != 0 ]]; then
