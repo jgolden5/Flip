@@ -49,13 +49,13 @@ print_flip_help() {
   echo -e "\t\t\t                    \t\t   5/(mis)tral/french"
   echo -e "\t\t\t                    \t\t   6/meta/facebook/fb"
   echo -e "\t\t\t                    \t\t   7/microsoft/copilot/co"
-  echo -e "\t\t\t                    \t\t   8/deepseek/whale/china/ds"
-  echo -e "\t\t\t                    \t\t   9/huggingface/hug/hf"
   echo -e "\t\t\t                    \t\t   * (all of the above)"
   echo
   echo -e "\t-n,\t\tget_n_responses  \t\t\"[prompt]. Give [param] responses.\""
   echo
   echo -e "\t-q,\t\tclarifying_questions  \t\t\"Ask [param] clarifying questions about the following prompt in order to understand my intent and optimize it for an LLM response: [prompt]\""
+  echo
+  echo -e "\t-s,\t\tget_sources  \t\t\"Please provide [param] clickable sources about the following: [prompt]\""
   echo
   echo -e "\t-u,\t\tuser_perspective \t\t\"Respond to the following as though I was [param]: [prompt]\""
   echo
@@ -88,6 +88,9 @@ execute_op() { #this function is generified like this so that the user may choos
       q)
         clarifying_questions "$param"
         ;;
+      s)
+        get_sources "$param"
+        ;;
       u)
         user_perspective "$param"
         ;;
@@ -114,13 +117,18 @@ choose_messenger() {
 }
 
 get_n_responses() {
-  n="$1"
+  local n="$1"
   prompt="$prompt. Give $n responses."
 }
 
 clarifying_questions() {
-  n="$1"
+  local n="$1"
   prompt="Ask $n clarifying questions about the following prompt in order to understand my intent and optimize it for an LLM response: $prompt"
+}
+
+get_sources() {
+  local n="$1"
+  prompt="Please provide $n clickable sources about the following: $prompt"
 }
 
 send_request() {
@@ -188,5 +196,5 @@ user_perspective() {
   fi
 }
 
-alias sf='source flip.sh && source clipboard_queue.sh'
+alias sf='source flip.sh'
 alias mai='flip -m "*"' #Mass AI send
