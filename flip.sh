@@ -36,8 +36,6 @@ print_flip_help() {
   echo -e "Flag:\t\tName of function:\t\tHow prompt is modified:"
   echo -e "\t-a,\t\tai_perspective   \t\t\"Respond to the following as though you were [param]: [prompt]\""
   echo
-  echo -e "\t-f,\t\tformat_output    \t\t\"Respond to the following prompt using [param] as the format for the response. [prompt]\""
-  echo
   echo -e "\t-l,\t\tcontrol_length   \t\t\"Respond to the following prompt in exactly [param]: [prompt]\""
   echo
   echo -e "\t-m,\t\tchoose_messenger \t\t Options:"
@@ -74,9 +72,6 @@ execute_op() { #this function is generified like this so that the user may choos
     case "$op" in
       a)
         ai_perspective "$param"
-        ;;
-      f)
-        format_output "$param"
         ;;
       l)
         control_length "$param"
@@ -183,16 +178,6 @@ ai_perspective() {
   else
     read -p "Please describe AI's role: " role
     user_perspective "$role"
-  fi
-}
-
-format_output() {
-  local format="$1"
-  if [[ "$format" ]]; then
-    prompt="Respond to the following prompt using $format as the format for the response: $prompt"
-  else
-    read -p "Please describe the format you want your response in: " format
-    format_output "$format"
   fi
 }
 
