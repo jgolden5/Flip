@@ -53,6 +53,8 @@ print_flip_help() {
   echo
   echo -e "\t-n,\t\tget_n_responses  \t\t\"[prompt]. Give [param] responses.\""
   echo
+  echo -e "\t-o,\t\tcontrol_output  \t\t\"This prompt will be encapsulated in double backticks. I want you to format the response/output as follows: $output. Here is the prompt: ``$prompt``\""
+  echo
   echo -e "\t-q,\t\tclarifying_questions  \t\t\"Ask [param] clarifying questions about the following prompt in order to understand my intent and optimize it for an LLM response: [prompt]\""
   echo
   echo -e "\t-s,\t\tget_sources  \t\t\"Please provide [param] clickable sources about the following: [prompt]\""
@@ -84,6 +86,9 @@ execute_op() { #this function is generified like this so that the user may choos
         ;;
       n)
         get_n_responses "$param"
+        ;;
+      o)
+        control_output "$param"
         ;;
       q)
         clarifying_questions "$param"
@@ -119,6 +124,11 @@ choose_messenger() {
 get_n_responses() {
   local n="$1"
   prompt="$prompt. Give $n responses."
+}
+
+control_output() {
+  local output="$1"
+  prompt="This prompt will be encapsulated in double backticks. I want you to format the response/output as follows: $output. Here is the prompt: \`\`$prompt\`\`"
 }
 
 clarifying_questions() {
