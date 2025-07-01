@@ -36,6 +36,8 @@ print_flip_help() {
   echo -e "Flag:\t\tName of function:\t\tHow prompt is modified:"
   echo -e "\t-a,\t\tai_perspective   \t\t\"Respond to the following as though you were [param]: [prompt]\""
   echo
+  echo -e "\t-c,\t\tprompt_completion   \t\t\"Respond to this prompt AND the previous [param] prompts with 5 relevant follow-up prompt ideas: [prompt]\""
+  echo
   echo -e "\t-l,\t\tcontrol_length   \t\t\"Respond to the following prompt in exactly [param]: [prompt]\""
   echo
   echo -e "\t-m,\t\tchoose_messenger \t\t Options:"
@@ -72,6 +74,9 @@ execute_op() { #this function is generified like this so that the user may choos
     case "$op" in
       a)
         ai_perspective "$param"
+        ;;
+      c)
+        prompt_completion "$param"
         ;;
       l)
         control_length "$param"
@@ -179,6 +184,11 @@ ai_perspective() {
     read -p "Please describe AI's role: " role
     user_perspective "$role"
   fi
+}
+
+prompt_completion() {
+  local number_of_prompts_back="$1"
+  prompt="Respond to this prompt AND the previous $number_of_prompts_back prompts with 5 relevant follow-up prompt ideas: $prompt"
 }
 
 user_perspective() {
