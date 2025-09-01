@@ -49,6 +49,7 @@ print_flip_help() {
   echo -e "\t\t\t                    \t\t   5/(mis)tral/french"
   echo -e "\t\t\t                    \t\t   6/meta/facebook/fb"
   echo -e "\t\t\t                    \t\t   7/microsoft/copilot/co"
+  echo -e "\t\t\t                    \t\t   8/perplexity/perp"
   echo -e "\t\t\t                    \t\t   * (all of the above)"
   echo
   echo -e "\t-n,\t\tget_n_responses  \t\t\"[prompt]. Give [param] responses.\""
@@ -113,7 +114,7 @@ control_length() {
 
 choose_messenger() {
   if [[ $1 == "*" ]]; then
-    for i in {0..7}; do
+    for i in {0..8}; do
       flip -m "$i" "$prompt"
     done
   else
@@ -166,6 +167,9 @@ send_request() {
     7|microsoft|copilot|co)
       open "https://copilot.microsoft.com/"
       echo $prompt | pbcopy && echo "The following prompt was successfully copied to the clipboard for you to paste into Microsoft Copilot's chat: $prompt"
+      ;;
+    8|perplexity|perp)
+      open "https://www.perplexity.ai/?q=$prompt"
       ;;
     *)
       if [[ $messenger != clipboard ]] && [[ $messenger != 0 ]]; then
