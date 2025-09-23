@@ -1,0 +1,86 @@
+.TH FLIP 1 "2025 Sep 23"
+.SH NAME
+flip - AI prompt generation assister
+.SH SYNOPSIS
+.br
+.B flip
+[OPTIONS...] [ARG...]
+.br
+.B mai 
+(mass AI generation, equivalent to flip -m '*')
+.br
+.SH DESCRIPTION
+.B Flip 
+is an AI prompt generation tool that gives the user access to high levels of customizability, all from the command line!
+.SH OPTIONS
+Options must begin with a dash, and multiple options with 
+.B only one
+dash at the beginning (such as flip -mno). 
+Additionally, parameters correspond to each option, and must consequently be passed into the flip command
+.B in order 
+of their corresponding options.
+.TP
+\-a
+AI perspective.
+"Respond to the following as though you were [param]: [prompt]"
+.TP
+\-i
+Prompt idea generator.
+"Respond to this prompt AND the previous [param] prompts with 5 revelant follow-up prompt ideas: [prompt]"
+.TP
+\-l
+Control length.
+"Respond to the following prompt in exactly [param]: [prompt]
+.TP
+\-m
+Choose messenger.
+.sp 2
+.RS
+Messanger Options:
+.br
+.RS
+0/clipboard/* (default)
+.br
+1/chat(gpt)
+.br
+2/grok/(x)ai
+.br
+3/(gem)ini/google
+.br
+4/claude/anthropic/cld
+.br
+5/(mis)tral/french
+.br
+6/meta/facebook/fb
+.br
+7/microsoft/copilot/co
+.br
+8/perplexity/perp
+.br
+* (all of the above)
+.br
+.RE
+.RE
+.TP
+\-n
+Get n responses.
+"[prompt]. Give [param] responses."
+.TP
+\-o
+Format output.
+"This prompt will be encapsulated in double-backticks. I want you to format the response as follows: [param]. Here is the prompt: \`\`[prompt]\`\`"
+.TP
+\-q
+Clarifying questions.
+"Ask [param] clarifying questions about the following prompt in order to understand my intent and optimize it for an LLM response: [prompt]."
+.TP
+\-s
+Get sources.
+"Please provide [param] clickable sources about the following: [prompt]."
+\-u
+User perspective.
+"Respond to the following as though I was [param]: [prompt]."
+.TP
+\-\-help
+View help summary.
+.br

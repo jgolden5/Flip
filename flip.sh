@@ -3,6 +3,8 @@
 prompt=""
 messenger=clipboard
 
+cp ~/flip/flip.1 /usr/share/man/man1/flip.1 && echo "Copied flip man page to local machine. You can view this page with: 'man flip'"
+
 flip() {
   local ops="$1" # options: eg. "-abc"
   if [[ $ops == '--help' ]]; then
@@ -36,7 +38,7 @@ print_flip_help() {
   echo -e "Flag:\t\tName of function:\t\tHow prompt is modified:"
   echo -e "\t-a,\t\tai_perspective   \t\t\"Respond to the following as though you were [param]: [prompt]\""
   echo
-  echo -e "\t-c,\t\tprompt_completion   \t\t\"Respond to this prompt AND the previous [param] prompts with 5 relevant follow-up prompt ideas: [prompt]\""
+  echo -e "\t-i,\t\tprompt_ideas     \t\t\"Respond to this prompt AND the previous [param] prompts with 5 relevant follow-up prompt ideas: [prompt]\""
   echo
   echo -e "\t-l,\t\tcontrol_length   \t\t\"Respond to the following prompt in exactly [param]: [prompt]\""
   echo
@@ -54,7 +56,7 @@ print_flip_help() {
   echo
   echo -e "\t-n,\t\tget_n_responses  \t\t\"[prompt]. Give [param] responses.\""
   echo
-  echo -e "\t-o,\t\tcontrol_output  \t\t\"This prompt will be encapsulated in double backticks. I want you to format the response/output as follows: $output. Here is the prompt: ``$prompt``\""
+  echo -e "\t-o,\t\tformat_output  \t\t\"This prompt will be encapsulated in double backticks. I want you to format the response/output as follows: [param]. Here is the prompt: ``[prompt]``\""
   echo
   echo -e "\t-q,\t\tclarifying_questions  \t\t\"Ask [param] clarifying questions about the following prompt in order to understand my intent and optimize it for an LLM response: [prompt]\""
   echo
@@ -76,8 +78,8 @@ execute_op() { #this function is generified like this so that the user may choos
       a)
         ai_perspective "$param"
         ;;
-      c)
-        prompt_completion "$param"
+      i)
+        prompt_ideas "$param"
         ;;
       l)
         control_length "$param"
@@ -89,7 +91,7 @@ execute_op() { #this function is generified like this so that the user may choos
         get_n_responses "$param"
         ;;
       o)
-        control_output "$param"
+        format_output "$param"
         ;;
       q)
         clarifying_questions "$param"
@@ -127,7 +129,7 @@ get_n_responses() {
   prompt="$prompt. Give $n responses."
 }
 
-control_output() {
+format_output() {
   local output="$1"
   prompt="This prompt will be encapsulated in double backticks. I want you to format the response/output as follows: $output. Here is the prompt: \`\`$prompt\`\`"
 }
@@ -190,7 +192,7 @@ ai_perspective() {
   fi
 }
 
-prompt_completion() {
+prompt_ideas() {
   local number_of_prompts_back="$1"
   prompt="Respond to this prompt AND the previous $number_of_prompts_back prompts with 5 relevant follow-up prompt ideas: $prompt"
 }
