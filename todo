@@ -1,0 +1,4 @@
+make flip compatible with MSYS2 and recognize the system name based on uname -a
+add -c for context injection (inject context such as "I am preparing for a job interview in software development and want to know which problems the company needs solved.")
+add -d for depth of detail/complexity in response (such as brief, standard, deep, expert, superexpert)
+add -t for tone (such as formal, casual, humorous, persuasive, empathetic, informative, etc)
