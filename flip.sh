@@ -3,7 +3,12 @@
 prompt=""
 messenger=clipboard
 
-cp ~/flip/flip.1 /usr/share/man/man1/flip.1 && echo "Copied flip man page to local machine. You can view this page with: 'man flip'"
+cp flip.1 /usr/share/man/man1/ || sudo cp flip.1 /usr/local/share/man/man1/
+if [[ $? == 0 ]]; then 
+  echo "Copied and zipped flip man page to local machine. You can view this page with: 'man flip'"
+else
+  echo "flip.1 file wasn't copied right"
+fi
 
 flip() {
   local ops="$1" # options: eg. "-abc"
