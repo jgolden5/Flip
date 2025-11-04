@@ -3,7 +3,6 @@
 prompt=""
 messenger=clipboard
 
-cp flip.1 /usr/share/man/man1/ 2>/dev/null || sudo cp flip.1 /usr/local/share/man/man1/ 2>/dev/null
 if [[ $? == 0 ]]; then 
   echo "Copied and zipped flip man page to local machine. You can view this page with: 'man flip'"
 else
