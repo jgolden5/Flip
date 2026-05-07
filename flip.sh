@@ -2,12 +2,23 @@
 
 prompt=""
 messenger=clipboard
+sys=$(uname -a)
+browser_command=
 
-if [[ $? == 0 ]]; then 
-  echo "Copied and zipped flip man page to local machine. You can view this page with: 'man flip'"
-else
-  echo "flip.1 file wasn't copied right"
-fi
+set_vars_by_system() {
+  system_type="$1"
+  if [[ $system_type =~ "Linux" ]]; then
+    browser_command="start"
+  elif [[ $system_type =~ "MINGW64" ]]; then
+    browser_command="explorer"
+  elif [[ $system_type =~ "Darwin" ]]; then
+    browser_command="open"
+  else
+    echo "System type \"$system_type\" not recognized, no browser command was set. Uh oh..."
+  fi
+}
+
+set_vars_by_system "$sys"
 
 flip() {
   local ops="$1" # options: eg. "-abc"
@@ -161,31 +172,31 @@ get_sources() {
 send_request() {
   case "${messenger,,}" in
     1|chatgpt|gpt)
-      open "https://chatgpt.com/?q=$prompt"
+      $browser_command "https://chatgpt.com/?q=$prompt"
       ;;
     2|grok|xai|x)
-      open "https://grok.com/?q=$prompt"
+      $browser_command "https://grok.com/?q=$prompt"
       ;;
     3|gemini|gem|google)
-      open "https://gemini.google.com/app"
+      $browser_command "https://gemini.google.com/app"
       echo $prompt | pbcopy && echo "The following prompt was successfully copied to the clipboard for you to paste into Gemini's chat: $prompt"
       ;;
     4|claude|anthropic|cld)
-      open "https://claude.ai/new?q=$prompt"
+      $browser_command "https://claude.ai/new?q=$prompt"
       ;;
     5|mistral|french|mis)
-      open "https://chat.mistral.ai/chat/?q=$prompt"
+      $browser_command "https://chat.mistral.ai/chat/?q=$prompt"
       ;;
     6|meta|facebook|fb)
-      open "https://meta.ai/"
+      $browser_command "https://meta.ai/"
       echo $prompt | pbcopy && echo "The following prompt was successfully copied to the clipboard for you to paste into Meta ai's chat: $prompt"
       ;;
     7|microsoft|copilot|co)
-      open "https://copilot.microsoft.com/"
+      $browser_command "https://copilot.microsoft.com/"
       echo $prompt | pbcopy && echo "The following prompt was successfully copied to the clipboard for you to paste into Microsoft Copilot's chat: $prompt"
       ;;
     8|perplexity|perp)
-      open "https://www.perplexity.ai/?q=$prompt"
+      $browser_command "https://www.perplexity.ai/?q=$prompt"
       ;;
     *)
       if [[ $messenger != clipboard ]] && [[ $messenger != 0 ]]; then
@@ -250,3 +261,9 @@ user_perspective() {
 alias sf='source flip.sh'
 alias vf='vim flip.sh'
 alias mai='flip -m "*"' #Mass AI send
+
+if [[ "$?" == 0 ]]; then
+  echo "flip.sh was sourced successfully"
+else
+  echo "something went wrong sourcing flip.sh. Exit code: $?"
+fi
