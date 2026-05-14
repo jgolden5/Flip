@@ -22,7 +22,7 @@ set_vars_by_system "$sys"
 
 flip() {
   local ops="$1" # options: eg. "-abc"
-  if [[ $ops == '--help' ]]; then
+  if [[ $ops == '--help' ]] || [[ ! $ops ]]; then
     print_flip_help "$2"
   else
     if [[ $ops =~ ^- ]]; then
